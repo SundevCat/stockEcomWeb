@@ -1,0 +1,26 @@
+.showside {
+  width: 250px;
+  transition: 1s;
+}
+
+.side-bar {
+  height: 100dvh;
+}
+
+.hideside {
+  width: 50px;
+  transition: 1s;
+}
+
+@media (max-width: 724px) {
+  .showside {
+    width: 100%;
+    transition: 1s;
+  }
+
+  .hideside {
+    width: 40px;
+    transition: 1s;
+  }
+
+}

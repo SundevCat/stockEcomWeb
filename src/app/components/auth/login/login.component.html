@@ -1,0 +1,28 @@
+<div class="row h-100 w-100 d-flex align-items-center">
+  <div class="col"></div>
+  <div class="col">
+    <div class="card">
+      <div class="card-header text-center fs-3 p-4 bg-secondary text-light">
+        eCommerce Stock
+      </div>
+      <div class="card-body">
+        <form [formGroup]="formLogin" (ngSubmit)="handleSubmit()">
+          <div class="w-75 m-auto py-4">
+            <label for="email_input" class="form-label">Email</label>
+            <div class="input-group mb-3">
+              <input type="text" class="form-control" id="email_input" formControlName="email"  aria-describedby="basic-addon3">
+            </div>
+            <label for="paassword_input" class="form-label">password</label>
+            <div class="input-group">
+              <input type="password" class="form-control" formControlName="password" id="password_input" 
+                aria-describedby="basic-addon3">
+            </div>
+            <label class="small text-end w-100 cursor-pointer  mb-3">forget password?</label>
+            <button type="submit" class="btn btn-success w-100"> sign in</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+  <div class="col"></div>
+</div>
