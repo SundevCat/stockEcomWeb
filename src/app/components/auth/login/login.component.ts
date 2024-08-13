@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { user } from '../../../models/user';
-import { FormBuilder } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { UserService } from '../../../services/user.service';
+import { catchError, throwError } from 'rxjs';
+import { VariableService } from '../../../services/variable.service';
 
 @Component({
   selector: 'app-login',
@@ -9,20 +11,27 @@ import { UserService } from '../../../services/user.service';
   styleUrl: './login.component.css'
 })
 export class LoginComponent {
-  public formLogin: any
-  constructor(public userService: UserService, public formbuilder: FormBuilder) {
+  formLogin: any
+  status: boolean = true
+  token: any
+  constructor(public userService: UserService, formbuilder: FormBuilder, private variableService: VariableService) {
     this.formLogin = formbuilder.group({
-      email: null,
-      password: null
+      Id: "null",
+      Name: "null",
+      Email: ["", [Validators.required, Validators.email]],
+      Password: ["", [Validators.required]]
     })
   }
-  handleSubmit() {
-    console.log(this.formLogin.value);
-    // this.userService.Login(this.formLogin.value).subscribe({
-    //   next: (data) => {
-    //     console.log(data);
 
-    //   }
-    // })
+  handleSubmit() {
+    this.userService.Login(this.formLogin.value).subscribe(
+      data => {
+        localStorage.setItem('token', data.toString())
+        this.variableService.login = false
+        this.status = true
+      },
+      error => { this.status = false }
+    )
+
   }
 }

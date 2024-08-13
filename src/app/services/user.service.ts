@@ -8,13 +8,26 @@ import { user } from '../models/user';
 })
 export class UserService {
 
-  constructor(public http: HttpClient) { }
+  constructor(private http: HttpClient) { }
 
   public getAllUsers() {
-    return this.http.get<user>(`${environment}User/GetAll`)
+    return this.http.get<user>(`${environment.apiUrl}User/GetAll`)
   }
-  public Login(user: user) {
-    return this.http.post<user>(`${environment}User/Login`, user)
+  public getUserById(id: string) {
+    return this.http.get<user>(`${environment.apiUrl}User/GetUserByid/${id}`)
+  }
+  public UpdateUser(id: string, user: user) {
+    return this.http.put<user>(`${environment.apiUrl}User/UpdateUser/${id}`, user)
+  }
+  public DeleteUser(id: string) {
+    return this.http.delete<user>(`${environment.apiUrl}User/DeleteUser/${id}`)
   }
 
+  //Authorization//
+  public Login(user: user) {
+    return this.http.post(`${environment.apiUrl}Auth/Login`, user, { responseType: 'text' as 'json' })
+  }
+  public Register(user: user) {
+    return this.http.post<user>(`${environment.apiUrl}Auth/Register`, user)
+  }
 }
