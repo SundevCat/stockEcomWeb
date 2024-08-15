@@ -1,0 +1,38 @@
+<div class="side-bar bg-dark w-100">
+  <div class="p-2 d-flex flex-column h-100">
+    <div class="d-flex py-3">
+      <div *ngIf=" this.variableService.sideBar" class="w-100 m-auto px-2">
+        <div class="text-center fs-4 text-light ">
+          จัดการคลัง
+        </div>
+      </div>
+      <div>
+        <mat-icon (click)="togglesidebar()" class=" text-light fs-2 text-end w-100" style="cursor: pointer;">
+          menu
+        </mat-icon>
+      </div>
+    </div>
+    <div class="list">
+      <div class="mt-auto d-flex py-2 " (click)="redirect('')" style="cursor: pointer;">
+        <div class="pe-2 ps-1">
+          <mat-icon class=" text-light fs-5 text-end w-100">
+            <span> home</span>
+          </mat-icon>
+        </div>
+        <div *ngIf="this.variableService.sideBar" class=" w-100 px-3">
+          <div  class="text-light text-start fs-5" style="text-decoration: none;">หน้าแรก</div>
+        </div>
+      </div>
+      <div class="mt-auto d-flex py-2 " (click)="redirect('/product')"  style="cursor: pointer;">
+        <div class="pe-2 ps-1">
+          <mat-icon class=" text-light fs-5 text-end w-100">
+            <span> shopping_basket</span>
+          </mat-icon>
+        </div>
+        <div *ngIf="this.variableService.sideBar" class=" w-100 px-3">
+          <div  class="text-light text-start fs-5" style="text-decoration: none;">สินค้า</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

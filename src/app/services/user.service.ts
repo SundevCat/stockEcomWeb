@@ -14,7 +14,7 @@ export class UserService {
     return this.http.get<user>(`${environment.apiUrl}User/GetAll`)
   }
   public getUserById(id: string) {
-    return this.http.get<user>(`${environment.apiUrl}User/GetUserByid/${id}`)
+    return this.http.get<user>(`${environment.apiUrl}User/GetUserById/${id}`)
   }
   public UpdateUser(id: string, user: user) {
     return this.http.put<user>(`${environment.apiUrl}User/UpdateUser/${id}`, user)

@@ -1,3 +1,13 @@
 <app-login *ngIf=" this.variableService.login"></app-login>
-<app-sidebar *ngIf=" !this.variableService.login "></app-sidebar>
-<router-outlet />
+<div class="d-flex position-relative w-100 bg-body-secondary min-vh-100">
+  <app-sidebar *ngIf=" !this.variableService.login" class="position-fixed side-bar"
+    [ngClass]="this.variableService.sideBar ? 'showside':'hideside'">
+  </app-sidebar>
+  <app-navbar class="navbar-top position-fixed"
+    [ngClass]="this.variableService.sideBar ? 'containner-hide':' containner-show'">
+  </app-navbar>
+
+  <div class="w-100 container " [ngClass]="this.variableService.sideBar ? 'containner-hide':' containner-show'">
+    <router-outlet class="overflow-y-auto flex-grow-1"></router-outlet>
+  </div>
+</div>

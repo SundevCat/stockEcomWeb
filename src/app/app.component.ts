@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { jwtDecode } from 'jwt-decode';
 import { VariableService } from './services/variable.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -12,21 +13,20 @@ export class AppComponent implements OnInit {
   token: any
   decodeToken: any
   status: any
-  constructor(public variableService: VariableService) {
+  constructor(public variableService: VariableService, private router: Router) {
 
   }
 
 
 
   ngOnInit(): void {
-    this.status = localStorage.getItem('status')
     if (typeof window !== 'undefined') {
+      this.status = localStorage.getItem('status')
       this.token = localStorage.getItem('token');
       if ((this.token === undefined || this.token === '') && localStorage.getItem('status') === "0") {
         this.variableService.login = true
         localStorage.setItem('status', "0")
       } else {
-        console.log(this.token);
         try {
           this.decodeToken = jwtDecode(this.token);
           this.variableService.user = this.decodeToken

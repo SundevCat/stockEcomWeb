@@ -1,0 +1,28 @@
+<nav class="navbar navbar-expand-lg navbar-light bg-light p-3 ">
+  <div class="container-fluid">
+    <div class="collapse navbar-collapse " id="navbarSupportedContent">
+      <div class="navbar-nav me-auto mb-2 mb-lg-0">
+        <div class="fs-1 fw-bold">
+          eCommerce Stock
+        </div>
+      </div>
+
+      <div class="d-flex dropdown-container" (click)="toggleSettings()">
+        <div *ngIf="user" class="fs-4 px-1">
+          {{ user.name }}
+        </div>
+        <mat-icon class=" text-secondary fs-5 text-center text-end w-100 " style="cursor: pointer;">
+          settings
+        </mat-icon>
+        <ul class="dropdown-menu border-0 shadow-sm " [ngClass]="settingStsuts?'show' :'hide' ">
+          <li> <a class="dropdown-item  text-secondary" href="#">ข้อมูลส่วนตัว</a></li>
+          <li> <a class="dropdown-item  text-secondary" href="#">เปลี่ยนรหัสผ่าน</a></li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li (click)="logout()"> <a class="dropdown-item  text-secondary" href="#">ออกจากระบบ</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</nav>

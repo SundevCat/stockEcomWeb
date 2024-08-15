@@ -1,0 +1,37 @@
+<div class=" container-fluid mt-5" >
+  <div class="row w-100">
+    <div class="col"></div>
+    <div class="col-12">
+      <div class="fs-2 py-2"> จำนวนสินค้า </div>
+      <div class="card p-4  fs-5">
+        <table datatable class="hover row-hover" [dtOptions]="dtoptions" [dtTrigger]="dtTrigger">
+          <thead>
+            <tr class="text-center">
+              <th>Barcode</th>
+              <th>Sku</th>
+              <th>ชื่อสินค้า</th>
+              <th>จำนวน</th>
+              <th>สถานะ</th>
+              <th style="min-width: 200px;">อัพเดทล่าสุด</th>
+              <th>อัพเดทโดย</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="productlist != null">
+            <tr *ngFor="let item of productlist">
+              <td>{{ item.barcode }}</td>
+              <td>{{ item.sku }}</td>
+              <td>{{ item.productName }}</td>
+              <td>{{ item.quantity }}</td>
+              <td>{{ item.ststus }}</td>
+              <td>{{ item.updateDate }}</td>
+              <td>{{ item.updateBy }}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="col"></div>
+  </div>
+
+</div>

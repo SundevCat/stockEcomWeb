@@ -1,0 +1,102 @@
+<div class=" container-fluid mt-5">
+  <div class="row w-100">
+    <div class="col"></div>
+    <div class="col-12">
+      <div class="fs-2 py-2"> จัดการสินค้า </div>
+      <div class="card p-4 fs-5">
+        <div class="ms-auto py-2">
+          <button class="btn btn-primary" type="button" data-bs-toggle="collapse" data-bs-target="#addproduct"
+            aria-expanded="false" aria-controls="addproduct">
+            เพิ่มสินค้า
+          </button>
+        </div>
+        <div class="collapse" id="addproduct">
+          <form action="">
+            <div class="card card-body">
+              <div class="row">
+                <div class="col">
+                  <label for="barcode" class="form-label ">Barcode</label>
+                  <div class="input-group mb-3">
+                    <input type="text" class="form-control" id="barcode">
+                  </div>
+                </div>
+                <div class="col">
+                  <label for="sku" class="form-label ">Sku</label>
+                  <div class="input-group mb-3">
+                    <input type="text" class="form-control" id="sku">
+                  </div>
+                </div>
+                <div class="col">
+                  <label for="productname" class="form-label ">ชื่อสินค้า</label>
+                  <div class="input-group mb-3">
+                    <input type="text" class="form-control" id="productname">
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col">
+                  <label for="quantity" class="form-label ">จำนวน</label>
+                  <div class="input-group mb-3">
+                    <input type="text" class="form-control" id="quantity">
+                  </div>
+                </div>
+                <div class="col">
+                  <label for="status" class="form-label">สถานะ</label>
+                  <div class="input-group mb-3">
+                    <input type="text" class="form-control" id="status">
+                  </div>
+                </div>
+                <div class="col">
+                  <button class="btn btn-success my-auto" type="button">บันทึก</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <table datatable class="hover row-hover" [dtOptions]="dtoptions" [dtTrigger]="dtTrigger">
+          <thead>
+            <tr class="text-center">
+              <th class="text-center">Barcode</th>
+              <th class="text-center">Sku</th>
+              <th class="text-center">ชื่อสินค้า</th>
+              <th class="text-center">จำนวน</th>
+              <th class="text-center">สถานะ</th>
+              <th class="text-center" style="min-width: 200px;">อัพเดทล่าสุด</th>
+              <th class="text-center">อัพเดทโดย</th>
+              <th class="text-center">การจัดการ</th>
+            </tr>
+          </thead>
+          <tbody *ngIf="productlist != null">
+            <tr *ngFor="let item of productlist">
+              <td>{{ item.barcode }}</td>
+              <td>{{ item.sku }}</td>
+              <td>{{ item.productName }}</td>
+              <td>{{ item.quantity }}</td>
+              <td>
+                <div class="small bg-danger text-light rounded-5 text-center" *ngIf="item.status == '0'">
+                  ปิดใช้งาน
+                </div>
+                <div class="small bg-success text-light rounded-5 text-center" *ngIf="item.status == '1'">
+                  เปิดใช้งาน
+                </div>
+              </td>
+              <td>{{ item.updateDate }}</td>
+              <td>{{ item.updateBy }}</td>
+              <td class="d-flex mx-auto">
+                <button class="btn btn-outline-success btn-sm m-auto small">
+                  แก้ไข
+                </button>
+                <button class="btn btn-outline-danger btn-sm m-auto small">
+                  ลบ
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="col"></div>
+  </div>
+
+</div>

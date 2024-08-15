@@ -1,0 +1,22 @@
+.dropdown-menu::before {
+  position: absolute;
+  top: -6px;
+  right: 15px;
+  display: block;
+  overflow: hidden;
+  width: 7px;
+  height: 7px;
+  content: "";
+  border-left: 7px solid transparent;
+  border-right: 7px solid transparent;
+  border-bottom: 7px solid #fff;
+}
+
+.dropdown-menu {
+  top: 120%;
+  right: 1.25rem;
+}
+
+.dropdown-item:active {
+  background-color: #f8f9fa
+}

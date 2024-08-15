@@ -1,0 +1,53 @@
+@font-face {
+  font-family: 'DB_AdmanRounded';
+  src: url('../assets/DB_AdmanRounded_X_v3.2.woff2');
+}
+
+@font-face {
+  font-family: 'VAG_Rounded';
+  src: url('../assets/Monotype_-_VAG_Rounded_Next_Regular.woff2');
+}
+
+* {
+  font-family: 'DB_AdmanRounded', 'VAG_Rounded' !important;
+}
+
+body,
+html {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+}
+
+.side-bar {
+  z-index: 999;
+}
+
+.navbar-top {
+  z-index: 100;
+  width: 100%;
+}
+
+.showside {
+  width: 230px;
+  transition: 0.3s;
+}
+
+.hideside {
+  width: 50px;
+  transition: 0.3s;
+}
+
+.container {
+  margin-top: 50px;
+}
+
+.containner-show {
+  padding-left: 50px;
+  transition: 0.3s;
+}
+
+.containner-hide {
+  padding-left: 230px;
+  transition: 0.3s;
+}
