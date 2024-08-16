@@ -18,7 +18,10 @@ export class AppComponent implements OnInit {
   }
 
 
-
+  //status 1 = login
+  // this.variableService.login = flase    login
+  //status 0 = logout
+  // this.variableService.login = true  logout
   ngOnInit(): void {
     if (typeof window !== 'undefined') {
       this.status = localStorage.getItem('status')

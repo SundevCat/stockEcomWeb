@@ -2,6 +2,7 @@ import { Component, HostListener, OnInit } from '@angular/core';
 import { UserService } from '../../../services/user.service';
 import { VariableService } from '../../../services/variable.service';
 import { user } from '../../../models/user';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-navbar',
@@ -11,7 +12,7 @@ import { user } from '../../../models/user';
 export class NavbarComponent implements OnInit {
   user: any
   settingStsuts: boolean = false
-  constructor(private userservice: UserService, private variableservice: VariableService,) {
+  constructor(private userservice: UserService, private variableservice: VariableService, private router: Router) {
 
   }
   ngOnInit(): void {
@@ -27,7 +28,7 @@ export class NavbarComponent implements OnInit {
     const target = event.target as HTMLElement;
     const clickedInside = target.closest('.dropdown-container');
     console.log(clickedInside);
-    
+
     if (!clickedInside) {
       this.settingStsuts = false;
     }
@@ -37,6 +38,7 @@ export class NavbarComponent implements OnInit {
     localStorage.setItem('status', "0")
     localStorage.setItem('token', '');
     this.variableservice.login = true
+    window.location.reload()
   }
   toggleSettings() {
     this.settingStsuts = !this.settingStsuts
