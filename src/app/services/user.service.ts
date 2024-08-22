@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { user } from '../models/user';
@@ -9,6 +9,15 @@ import { user } from '../models/user';
 export class UserService {
 
   constructor(private http: HttpClient) { }
+
+  private handleError(error: HttpErrorResponse) {
+    let errorMessage = 'An unknown error occurred!'
+    if (error.error instanceof ErrorEvent) {
+      errorMessage = error.error.message
+    } else {
+      errorMessage = `Error Code: ${error.status} \n Message:${error.message}`
+    }
+  }
 
   public getAllUsers() {
     return this.http.get<user>(`${environment.apiUrl}User/GetAll`)

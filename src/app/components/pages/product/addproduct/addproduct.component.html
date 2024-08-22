@@ -1,0 +1,65 @@
+<div *ngIf="this.skuChecked" class="alert alert-danger d-flex align-items-center" role="alert">
+  <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:">
+    <use xlink:href="#exclamation-triangle-fill" /></svg>
+  <div>
+    มี sku นี้อยู่ในระบบอยู่แล้ว
+  </div>
+</div>
+<div *ngIf="this.addproductStatus" class="alert alert-success d-flex align-items-center" role="alert">
+  <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:">
+    <use xlink:href="#check-circle-fill" /></svg>
+  <div>
+    เพิ่ม product เรียบร้อย
+  </div>
+</div>
+<form [formGroup]="product" (ngSubmit)="onSubmit()">
+  <div class="card card-body">
+    <div class="row">
+      <div class="col">
+        <label for="barcode" class="form-label ">Barcode</label>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" formControlName="barcode" id="barcode"
+            [ngClass]="{'is-invalid': this.product.get('barcode')?.invalid && this.submit }">
+        </div>
+      </div>
+      <div class="col">
+        <label for="sku" class="form-label ">Sku</label>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" formControlName="sku" id="sku"
+            [ngClass]="{'is-invalid': this.product.get('sku')?.invalid && this.submit }">
+        </div>
+      </div>
+      <div class="col">
+        <label for="productname" class="form-label ">ชื่อสินค้า</label>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" formControlName="productName" id="productName"
+            [ngClass]="{'is-invalid': this.product.get('productName')?.invalid && this.submit }">
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col">
+        <label for="quantity" class="form-label ">จำนวน</label>
+        <div class="input-group mb-3">
+          <input type="text" class="form-control" formControlName="quantity" id="quantity"
+            [ngClass]="{'is-invalid': this.product.get('quantity')?.invalid && this.submit }">
+        </div>
+      </div>
+      <div class="col">
+        <label for="status" class="form-label">สถานะ</label>
+        <div class="input-group mb-3">
+          <select class="form-control" name="status" formControlName="status" id="status">
+            <option value="1" selected>เปิดใช้งาน</option>
+            <option value="0">ปิดใช้งาน</option>
+          </select>
+        </div>
+      </div>
+      <div class="col">
+        <label for="status" class="form-label opacity-0"> </label>
+        <div class="input-group mb-3">
+          <button class="btn btn-success my-auto " type="submit">บันทึก</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>

@@ -15,20 +15,20 @@ export class NavbarComponent implements OnInit {
   constructor(private userservice: UserService, private variableservice: VariableService, private router: Router) {
 
   }
-  ngOnInit(): void {
+  async ngOnInit() {
     if (this.variableservice.user.id != '') {
-      this.userservice.getUserById(this.variableservice.user.id).subscribe(data => {
-        this.user = data
-      })
+      await this.fetchUserById(this.variableservice.user.id);
     }
+  }
+
+  async fetchUserById(userId: string) {
+    this.user = await this.userservice.getUserById(userId).toPromise();
   }
 
   @HostListener('document:click', ['$event'])
   onclickOutside(event: MouseEvent) {
     const target = event.target as HTMLElement;
     const clickedInside = target.closest('.dropdown-container');
-    console.log(clickedInside);
-
     if (!clickedInside) {
       this.settingStsuts = false;
     }

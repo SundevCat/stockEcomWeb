@@ -12,11 +12,10 @@ export class AppComponent implements OnInit {
   title = 'StockEcom';
   token: any
   decodeToken: any
-  status: any
+  status: any = '1'
   constructor(public variableService: VariableService, private router: Router) {
 
   }
-
 
   //status 1 = login
   // this.variableService.login = flase    login
@@ -35,6 +34,7 @@ export class AppComponent implements OnInit {
           this.variableService.user = this.decodeToken
           this.variableService.login = false
           localStorage.setItem('status', "1")
+
         } catch (e) {
           console.log("invalid token", e);
         }

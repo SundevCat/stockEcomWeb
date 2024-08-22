@@ -1,37 +1,70 @@
-import { Component } from '@angular/core';
+import { AfterContentInit, AfterViewChecked, AfterViewInit, Component, DoCheck, OnDestroy, OnInit } from '@angular/core';
 import { Config } from 'datatables.net';
-import { Subject } from 'rxjs';
+import { Subject, takeUntil } from 'rxjs';
 import { ProductService } from '../../../services/product.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
   styleUrl: './product.component.css'
 })
-export class ProductComponent {
+export class ProductComponent implements OnInit, OnDestroy {
   productlist: any
   dtoptions: Config = {}
   dtTrigger: Subject<any> = new Subject<any>()
-  constructor(private product: ProductService) { }
+  private unsubscribe = new Subject<any>();
+  constructor(private productservice: ProductService) { }
 
 
-  ngOnInit(): void {
-    this.loadProducts()
-    this.dtoptions = {
-      pagingType: 'full_numbers'
+  ngOnInit() {
+    if (typeof window !== 'undefined') {
+      this.dtoptions = {
+        pagingType: 'full_numbers',
+      }
+      this.loadProducts()
     }
+  }
+  ngOnDestroy(): void {
+    this.dtTrigger.unsubscribe();
+    this.unsubscribe.next(null);
+    this.unsubscribe.complete();
+  }
 
+  async deleteProduct(sku: string) {
+    Swal.fire({
+      title: 'Are you sure?',
+      text: 'You want to delete this product!',
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: ' #d33',
+      cancelButtonColor: '#3085d6',
+      confirmButtonText: "Yes, delete it!"
+    }).then(async (result) => {
+      if (result.isConfirmed) {
+        await this.productservice.DeleteProduct(sku).toPromise().then(() => {
+          Swal.fire({
+            title: 'Deleted!',
+            text: 'Your product has beed deleted.',
+            icon: 'success',
+            showConfirmButton: false,
+            timer: 1000
+          })
+          this.productservice.getAllProducts().subscribe((item) => {
+            this.productlist = item
+            this.dtTrigger.next(null)
+          })
+        });
+      }
+    })
   }
 
 
   loadProducts() {
-    if (typeof window !== 'undefined') {
-      this.product.getAllProducts().subscribe(item => {
-        this.productlist = item;
-        this.dtTrigger.next(null)
-        console.log(this.productlist);
-      })
-    }
+    this.productservice.getAllProducts().subscribe((item) => {
+      this.productlist = item
+      this.dtTrigger.next(null)
+    })
   }
 
 }

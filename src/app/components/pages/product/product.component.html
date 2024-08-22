@@ -10,50 +10,10 @@
             เพิ่มสินค้า
           </button>
         </div>
-        <div class="collapse" id="addproduct">
-          <form action="">
-            <div class="card card-body">
-              <div class="row">
-                <div class="col">
-                  <label for="barcode" class="form-label ">Barcode</label>
-                  <div class="input-group mb-3">
-                    <input type="text" class="form-control" id="barcode">
-                  </div>
-                </div>
-                <div class="col">
-                  <label for="sku" class="form-label ">Sku</label>
-                  <div class="input-group mb-3">
-                    <input type="text" class="form-control" id="sku">
-                  </div>
-                </div>
-                <div class="col">
-                  <label for="productname" class="form-label ">ชื่อสินค้า</label>
-                  <div class="input-group mb-3">
-                    <input type="text" class="form-control" id="productname">
-                  </div>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col">
-                  <label for="quantity" class="form-label ">จำนวน</label>
-                  <div class="input-group mb-3">
-                    <input type="text" class="form-control" id="quantity">
-                  </div>
-                </div>
-                <div class="col">
-                  <label for="status" class="form-label">สถานะ</label>
-                  <div class="input-group mb-3">
-                    <input type="text" class="form-control" id="status">
-                  </div>
-                </div>
-                <div class="col">
-                  <button class="btn btn-success my-auto" type="button">บันทึก</button>
-                </div>
-              </div>
-            </div>
-          </form>
-        </div>
-        <table datatable class="hover row-hover" [dtOptions]="dtoptions" [dtTrigger]="dtTrigger">
+        <!-- <div class="collapse" id="addproduct"> -->
+        <app-addproduct></app-addproduct>
+        <!-- </div> -->
+        <table datatable class="hover row-hover" [dtOptions]="dtoptions" [dtTrigger]="dtTrigger" id="myTable">
           <thead>
             <tr class="text-center">
               <th class="text-center">Barcode</th>
@@ -66,7 +26,7 @@
               <th class="text-center">การจัดการ</th>
             </tr>
           </thead>
-          <tbody *ngIf="productlist != null">
+          <tbody *ngIf="productlist != undefined">
             <tr *ngFor="let item of productlist">
               <td>{{ item.barcode }}</td>
               <td>{{ item.sku }}</td>
@@ -86,7 +46,7 @@
                 <button class="btn btn-outline-success btn-sm m-auto small">
                   แก้ไข
                 </button>
-                <button class="btn btn-outline-danger btn-sm m-auto small">
+                <button class="btn btn-outline-danger btn-sm m-auto small" (click)="deleteProduct(item.sku)" >
                   ลบ
                 </button>
               </td>
@@ -100,3 +60,4 @@
   </div>
 
 </div>
+

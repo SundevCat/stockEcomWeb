@@ -1,4 +1,4 @@
-<div class=" container-fluid mt-5" >
+<div class=" container-fluid mt-5">
   <div class="row w-100">
     <div class="col"></div>
     <div class="col-12">
@@ -17,14 +17,16 @@
             </tr>
           </thead>
           <tbody *ngIf="productlist != null">
-            <tr *ngFor="let item of productlist">
+            <tr *ngFor="let item of productlist" >
+              
               <td>{{ item.barcode }}</td>
               <td>{{ item.sku }}</td>
               <td>{{ item.productName }}</td>
               <td>{{ item.quantity }}</td>
-              <td>{{ item.ststus }}</td>
+              <td>{{ item.status }}</td>
               <td>{{ item.updateDate }}</td>
               <td>{{ item.updateBy }}</td>
+
             </tr>
           </tbody>
         </table>

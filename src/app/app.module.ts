@@ -16,6 +16,8 @@ import { TokenService } from './services/token.service';
 import { ProductComponent } from './components/pages/product/product.component';
 import { DataTablesModule } from 'angular-datatables';
 import { NavbarComponent } from './components/controls/navbar/navbar.component';
+import { AddproductComponent } from './components/pages/product/addproduct/addproduct.component';
+import { AddfileproductComponent } from './components/pages/product/addfileproduct/addfileproduct.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,9 @@ import { NavbarComponent } from './components/controls/navbar/navbar.component';
     RegisterComponent,
     HomeComponent,
     ProductComponent,
-    NavbarComponent
+    NavbarComponent,
+    AddproductComponent,
+    AddfileproductComponent
   ],
   imports: [
     AppRoutingModule,

@@ -11,14 +11,14 @@ import { Config } from 'datatables.net';
 })
 export class HomeComponent implements OnInit {
 
-  productlist: any
+  productlist: product[] = []
   dtoptions: Config = {}
   dtTrigger: Subject<any> = new Subject<any>()
   constructor(private product: ProductService) { }
 
 
-  ngOnInit(): void {
-    this.loadProducts()
+  async ngOnInit() {
+    await this.loadProducts()
     this.dtoptions = {
       pagingType: 'full_numbers'
     }
@@ -26,12 +26,17 @@ export class HomeComponent implements OnInit {
   }
 
 
-  loadProducts() {
+  async loadProducts() {
     if (typeof window !== 'undefined') {
-      this.product.getAllProducts().subscribe(item => {
-        this.productlist = item;
-        this.dtTrigger.next(null)
-      })
+      try {
+        this.product.getAllProducts().subscribe(item => {
+          this.productlist = this.productlist.concat(item)
+          this.productlist = this.productlist.filter(item => item.status === '1')
+          this.dtTrigger.next(null)
+        })
+      } catch (e) {
+        console.log(e);
+      }
     }
   }
 

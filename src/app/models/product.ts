@@ -1,9 +1,9 @@
 export interface product {
-    Sku: string;
+    sku: string;
     productName: string;
-    Quantity: number;
-    Ststus: string;
-    UpdateDate: string;
-    UpdateBy: string;
-    Barcode: string;
+    quantity: number;
+    status: string;
+    updateDate: string;
+    updateBy: string;
+    barcode: string;
 }
