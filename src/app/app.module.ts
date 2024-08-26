@@ -18,6 +18,7 @@ import { DataTablesModule } from 'angular-datatables';
 import { NavbarComponent } from './components/controls/navbar/navbar.component';
 import { AddproductComponent } from './components/pages/product/addproduct/addproduct.component';
 import { AddfileproductComponent } from './components/pages/product/addfileproduct/addfileproduct.component';
+import { UploadcheckComponent } from './components/pages/product/addfileproduct/uploadcheck/uploadcheck.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +30,8 @@ import { AddfileproductComponent } from './components/pages/product/addfileprodu
     ProductComponent,
     NavbarComponent,
     AddproductComponent,
-    AddfileproductComponent
+    AddfileproductComponent,
+    UploadcheckComponent
   ],
   imports: [
     AppRoutingModule,

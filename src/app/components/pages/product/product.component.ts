@@ -10,7 +10,7 @@ import Swal from 'sweetalert2';
   styleUrl: './product.component.css'
 })
 export class ProductComponent implements OnInit, OnDestroy {
-  productlist: any
+  productlist: any[] = []
   dtoptions: Config = {}
   dtTrigger: Subject<any> = new Subject<any>()
   private unsubscribe = new Subject<any>();
@@ -50,10 +50,7 @@ export class ProductComponent implements OnInit, OnDestroy {
             showConfirmButton: false,
             timer: 1000
           })
-          this.productservice.getAllProducts().subscribe((item) => {
-            this.productlist = item
-            this.dtTrigger.next(null)
-          })
+          this.productlist.splice(this.productlist.findIndex(item => item.sku == sku), 1)
         });
       }
     })
@@ -62,9 +59,20 @@ export class ProductComponent implements OnInit, OnDestroy {
 
   loadProducts() {
     this.productservice.getAllProducts().subscribe((item) => {
-      this.productlist = item
+      this.productlist = this.productlist.concat(item)
       this.dtTrigger.next(null)
     })
   }
 
+
+  switchCoolapse(status: number) {
+    switch (status) {
+      case 1:
+        window.document.getElementById("addproduct")?.classList.remove('show')
+        break;
+      case 2:
+        window.document.getElementById("addfileproduct")?.classList.remove('show')
+        break;
+    }
+  }
 }

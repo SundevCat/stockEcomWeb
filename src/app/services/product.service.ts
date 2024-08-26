@@ -18,6 +18,9 @@ export class ProductService {
   public AddProduct(product: product) {
     return this.http.post<product>(`${environment.apiUrl}Product/AddProduct`, product)
   }
+  public AddMultiProducts(product: product[]) {
+    return this.http.post<product>(`${environment.apiUrl}Product/AddMultiProduct`, product)
+  }
   public UpdateProduct(sku: string, product: product) {
     return this.http.put<product>(`${environment.apiUrl}Product/UpdateProduct/${sku}`, product)
   }

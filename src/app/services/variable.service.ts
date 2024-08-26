@@ -34,6 +34,4 @@ export class VariableService {
   set sideBar(newvalue: boolean) {
     this._sideBar = newvalue;
   }
-
-
 }

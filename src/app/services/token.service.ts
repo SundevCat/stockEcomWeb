@@ -1,9 +1,9 @@
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
-import { Injectable, OnInit } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { catchError, Observable, throwError } from 'rxjs';
 import { VariableService } from './variable.service';
-import { jwtDecode } from 'jwt-decode';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
@@ -23,6 +23,13 @@ export class TokenService implements HttpInterceptor {
               this.router.navigate(['/'])
               this.variableService.login = true
               localStorage.setItem('status', "0")
+            }
+            if (error.status === 0) {
+              Swal.fire({
+                title: `Api Error Status: ${error.status}`,
+                icon: 'error',
+                showConfirmButton: false
+              })
             }
             console.log(error.status);
 

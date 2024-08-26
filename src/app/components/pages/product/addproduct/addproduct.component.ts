@@ -34,6 +34,11 @@ export class AddproductComponent implements OnInit {
       await this.getUserById()
     }
   }
+
+  unChecked() {
+    this.skuChecked = false
+  }
+
   onSubmit() {
     this.submit = true
     if (this.product.valid) {

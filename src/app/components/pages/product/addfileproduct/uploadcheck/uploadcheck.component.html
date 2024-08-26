@@ -1,0 +1,14 @@
+<table class="table">
+  <tbody *ngIf="this.uploadstatus">
+    <tr *ngFor="let item of productsUpload">
+      <td>{{ item.sku }}</td>
+      <td>{{ item.productName }}</td>
+      <td *ngIf="this.exitProduct" class="text-danger"> มี sku นี้แล้ว </td>
+    </tr>
+  </tbody>
+  <tbody *ngIf="this.uploadstatus == false">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </tbody>
+</table>

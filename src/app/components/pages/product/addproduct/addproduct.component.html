@@ -1,9 +1,10 @@
-<div *ngIf="this.skuChecked" class="alert alert-danger d-flex align-items-center" role="alert">
+<div *ngIf="this.skuChecked" class="alert alert-danger d-flex align-items-center justify-content-between" role="alert">
   <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Danger:">
     <use xlink:href="#exclamation-triangle-fill" /></svg>
   <div>
-    มี sku นี้อยู่ในระบบอยู่แล้ว
+    มี sku นี้อยู่ในระบบแล้ว
   </div>
+  <button (click)="unChecked()" type="button" class="btn-close small" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 <div *ngIf="this.addproductStatus" class="alert alert-success d-flex align-items-center" role="alert">
   <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Success:">
