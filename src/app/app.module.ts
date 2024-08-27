@@ -9,7 +9,7 @@ import { RegisterComponent } from './components/auth/register/register.component
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { MatIconModule } from '@angular/material/icon';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { HomeComponent } from './components/pages/home/home.component';
 import { TokenService } from './services/token.service';
@@ -19,7 +19,8 @@ import { NavbarComponent } from './components/controls/navbar/navbar.component';
 import { AddproductComponent } from './components/pages/product/addproduct/addproduct.component';
 import { AddfileproductComponent } from './components/pages/product/addfileproduct/addfileproduct.component';
 import { UploadcheckComponent } from './components/pages/product/addfileproduct/uploadcheck/uploadcheck.component';
-
+import { ScannerComponent } from './components/pages/home/scanner/scanner.component';
+import { SummarizeComponent } from './components/pages/home/scanner/summarize/summarize.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,13 +32,16 @@ import { UploadcheckComponent } from './components/pages/product/addfileproduct/
     NavbarComponent,
     AddproductComponent,
     AddfileproductComponent,
-    UploadcheckComponent
+    UploadcheckComponent,
+    ScannerComponent,
+    SummarizeComponent,
   ],
   imports: [
     AppRoutingModule,
     BrowserModule,
-    DataTablesModule,
-    HttpClientModule,
+    DataTablesModule, //ใช้งาน Datatable
+    FormsModule, //ใช้งาน ngModel
+    HttpClientModule, // ใช้งาน httpClient
     MatIconModule,
     NgbModule,
     ReactiveFormsModule,

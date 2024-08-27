@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FileService } from '../../../../services/file.service';
-import * as ExcelJS from 'exceljs';
 import { FunctionsService } from '../../../../services/functions.service';
 import { VariableService } from '../../../../services/variable.service';
 import { UserService } from '../../../../services/user.service';
 import Swal from 'sweetalert2';
+import excel from 'exceljs';
 
 @Component({
   selector: 'app-addfileproduct',
@@ -53,7 +53,7 @@ export class AddfileproductComponent implements OnInit {
   }
 
   parseExcle(arrayBuffer: any) {
-    const workbox = new ExcelJS.Workbook();
+    const workbox = new excel.Workbook();
     let countCheckHeader: number = 0
     workbox.xlsx.load(arrayBuffer).then((workbox) => {
       const rowHeader: any = ["", "barcode", "sku", "productName", "quantity", "status"]
@@ -88,7 +88,7 @@ export class AddfileproductComponent implements OnInit {
             }
           }
         })
-      })
+      })  
       if (countCheckHeader === 5) {
         console.log(JSON.stringify(this.jsonData, null, 2));
         this.statusPageUpload = true

@@ -17,10 +17,10 @@
         <div class="collapse" id="addproduct">
           <app-addproduct></app-addproduct>
         </div>
-        <!-- <div class="collapse" id="addfileproduct"> -->
+        <div class="collapse" id="addfileproduct">
           <app-addfileproduct></app-addfileproduct>
-        <!-- </div> -->
-        <table datatable class="hover row-hover" [dtOptions]="dtoptions" [dtTrigger]="dtTrigger" id="myTable">
+        </div>
+        <table datatable class="hover row-hover " [dtOptions]="dtoptions" [dtTrigger]="dtTrigger" id="myTable">
           <thead>
             <tr class="text-center">
               <th class="text-center">Barcode</th>
@@ -28,7 +28,7 @@
               <th class="text-center">ชื่อสินค้า</th>
               <th class="text-center">จำนวน</th>
               <th class="text-center">สถานะ</th>
-              <th class="text-center" style="min-width: 200px;">อัพเดทล่าสุด</th>
+              <th class="text-center">อัพเดทล่าสุด</th>
               <th class="text-center">อัพเดทโดย</th>
               <th class="text-center">การจัดการ</th>
             </tr>
@@ -60,6 +60,11 @@
             </tr>
           </tbody>
         </table>
+        <div>
+          <button class="btn btn-sm btn-outline-success" (click)="exportExcle()">
+            Export to excle
+          </button>
+        </div>
       </div>
     </div>
 

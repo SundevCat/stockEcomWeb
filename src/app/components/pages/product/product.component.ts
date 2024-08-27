@@ -3,7 +3,7 @@ import { Config } from 'datatables.net';
 import { Subject, takeUntil } from 'rxjs';
 import { ProductService } from '../../../services/product.service';
 import Swal from 'sweetalert2';
-
+import excel from 'exceljs';
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
@@ -13,7 +13,10 @@ export class ProductComponent implements OnInit, OnDestroy {
   productlist: any[] = []
   dtoptions: Config = {}
   dtTrigger: Subject<any> = new Subject<any>()
+  tableResponsive: boolean = false
+
   private unsubscribe = new Subject<any>();
+
   constructor(private productservice: ProductService) { }
 
 
@@ -25,6 +28,7 @@ export class ProductComponent implements OnInit, OnDestroy {
       this.loadProducts()
     }
   }
+
   ngOnDestroy(): void {
     this.dtTrigger.unsubscribe();
     this.unsubscribe.next(null);
@@ -57,6 +61,7 @@ export class ProductComponent implements OnInit, OnDestroy {
   }
 
 
+
   loadProducts() {
     this.productservice.getAllProducts().subscribe((item) => {
       this.productlist = this.productlist.concat(item)
@@ -74,5 +79,11 @@ export class ProductComponent implements OnInit, OnDestroy {
         window.document.getElementById("addfileproduct")?.classList.remove('show')
         break;
     }
+  }
+
+  exportExcle() {
+    let workbook = new excel.Workbook();
+    const rows = workbook.addWorksheet('sheet') 
+    const columns = ["barcode", "sku", "productName", "quantity", "status"]
   }
 }

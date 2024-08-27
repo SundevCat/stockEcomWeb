@@ -1,9 +1,17 @@
 <table class="table">
-  <tbody *ngIf="this.uploadstatus">
+  <thead>
+    <tr>
+      <td>sku</td>
+      <td> ชื่อสินค้า</td>
+      <td> status</td>
+    </tr>
+  </thead>
+  <tbody *ngIf="this.uploadstatus" class="small">
     <tr *ngFor="let item of productsUpload">
       <td>{{ item.sku }}</td>
       <td>{{ item.productName }}</td>
-      <td *ngIf="this.exitProduct" class="text-danger"> มี sku นี้แล้ว </td>
+      <td *ngIf="this.exitsProduct" class="text-danger"> มี sku นี้แล้ว </td>
+      <td *ngIf="this.exitsProduct == false" class="text-success"> ผ่าน </td>
     </tr>
   </tbody>
   <tbody *ngIf="this.uploadstatus == false">
@@ -12,3 +20,8 @@
     </div>
   </tbody>
 </table>
+<div class="d-flex">
+  <button class="btn btn-outline-success ms-auto" *ngIf="this.exitsProduct==false" (click)="uploadFile()">
+    ยืนยันการอัพโหลด</button>
+
+</div>

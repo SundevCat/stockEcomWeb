@@ -10,47 +10,40 @@ import { HttpErrorResponse } from '@angular/common/http';
 })
 export class UploadcheckComponent implements OnInit {
   @Input() jsonData: any[] = []
-  // jsonData: any[] = [{
-
-  //   "barcode": 12345667892,
-  //   "updateBy": "arm1",
-  //   "updateDate": "26 August 2024 17:55:46",
-  //   "sku": 1235,
-  //   "productName": "test import",
-  //   "quantity": 1,
-  //   "status": 1
-
-  // }]
   productsUpload: any[] = []
   uploadstatus: boolean = false
-  exitProduct: boolean = false
+  exitsProduct: boolean = true
 
   constructor(private productservice: ProductService) { }
-  ngOnInit(): void {
-    this.uploadFile();
+  ngOnInit() {
+    this.validateProducts();
   }
 
-  async uploadFile() {
+  async validateProducts() {
     if (this.jsonData.length != 0) {
       console.log(this.jsonData);
 
-      await this.productservice.AddMultiProducts(this.jsonData).pipe(
+      await this.productservice.ValidateAddMultiProducts(this.jsonData).pipe(
         catchError((error: HttpErrorResponse) => {
-          console.log(error.status);
-
-          if (error.status == 200) {
-            this.exitProduct = false
-          }
           if (error.status == 409) {
-            this.exitProduct = true
+            this.exitsProduct = true
+            this.uploadstatus = true
+            this.productsUpload = this.productsUpload.concat(error.error)
           }
           return throwError(() => error);
         })
       ).toPromise().then((data) => {
-        this.productsUpload = this.productsUpload.concat(data)
-        console.log(data);
+        this.exitsProduct = false
         this.uploadstatus = true
+        this.productsUpload = this.productsUpload.concat(data)
       })
+    }
+  }
+
+  async uploadFile() {
+    if (this.exitsProduct == false) {
+      console.log(this.productsUpload);
+      await this.productservice.AddMultiProducts(this.jsonData).toPromise().then(() => { window.location.reload() })
     }
   }
 }

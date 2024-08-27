@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
 import { ProductService } from '../../../services/product.service';
 import { product } from '../../../models/product';
 import { Subject } from 'rxjs';
@@ -9,22 +9,30 @@ import { Config } from 'datatables.net';
   templateUrl: './home.component.html',
   styleUrl: './home.component.css'
 })
-export class HomeComponent implements OnInit {
-
+export class HomeComponent implements OnInit, OnDestroy {
+  status: any = 0
+  addState: boolean = false
+  cutState: boolean = false
   productlist: product[] = []
   dtoptions: Config = {}
   dtTrigger: Subject<any> = new Subject<any>()
+  private unsubscribe = new Subject<any>();
+
   constructor(private product: ProductService) { }
 
 
-  async ngOnInit() {
-    await this.loadProducts()
+  ngOnInit() {
+    this.loadProducts()
     this.dtoptions = {
       pagingType: 'full_numbers'
     }
 
   }
 
+  ngOnDestroy(): void {
+    this.unsubscribe.next(null);
+    this.unsubscribe.complete();
+  }
 
   async loadProducts() {
     if (typeof window !== 'undefined') {
@@ -40,5 +48,11 @@ export class HomeComponent implements OnInit {
     }
   }
 
-
+  switchCoolapse(status: number) {
+    if (this.status == status) {
+      this.status = 0
+    } else {
+      this.status = status
+    }
+  }
 }

@@ -1,0 +1,22 @@
+<div>
+  <button class="btn btn-outline-primary" (click)="reload()"> กลับ </button>
+</div>
+<div class="text-center py-2">
+    สรุปรายการอัพเดท
+</div>
+<div>
+  <table class="w-25 m-auto text-center">
+    <thead>
+      <tr>
+        <td>sku</td>
+        <td>จำนวน</td>
+      </tr>
+    </thead>
+    <tbody *ngIf="this.data">
+      <tr *ngFor="let item of data">
+        <td>{{ item.sku }}</td>
+        <td>{{ item.quantity }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>

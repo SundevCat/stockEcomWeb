@@ -1,0 +1,46 @@
+<div class="card card-body py-2">
+  <div *ngIf="this.submitted==false">
+    <div class="d-flex w-100 py-2">
+      <button class="btn btn-outline-success " [ngClass]="{'disabled': this.scannedProducts.length == 0 }" (click)="addStock()">
+        เพิ่ม Stock</button>
+      <button class="btn btn-outline-danger ms-auto" [ngClass]="{'disabled': this.scannedProducts.length == 0 }"
+        (click)="cutStock()">ตัด Stock</button>
+    </div>
+    <div class="w-100">
+      <div class="w-100 text-center text-success fs-4 py-2">Scan Barcode </div>
+      <label class="form-label small text-danger" for="scannedBarcode">*หมายเหตุ กรุณาตรวจสอบภาษาของเครื่องให้เป็นภาษาอังกฤษ</label>
+      <input class="form-control" type="text" id="scannedBarcode" [(ngModel)]="scannedBarcode" (ngModelChange)="onBarcodeScanned()"
+        placeholder="Click here to scan" />
+      <div class="my-2" *ngIf="this.scannedProducts">
+        <div class="card p-2 " *ngFor="let item of this.scannedProducts">
+          <div class="row">
+            <div class="col">
+              <label for="barcode" class="small"> barcode</label>
+              <div id="barcode"> {{ item.barcode }}</div>
+            </div>
+            <div class="col">
+              <label for="sku" class="small"> sku</label>
+              <div id="sku"> {{ item.sku }}</div>
+            </div>
+            <div class="col">
+              <label for="productname" class="small"> product name</label>
+              <div id="productname"> {{ item.productName }}</div>
+            </div>
+            <div class="col">
+              <label for="quantity" class="small"> จำนวน</label>
+              <div id="quantity"> {{ item.quantity }}</div>
+            </div>
+            <div class="col m-auto">
+              <button class="btn btn-outline-danger btn-sm" (click)="deleteScannedProduct(item.sku)"> ลบ </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+  <div *ngIf="this.submitted">
+    <app-summarize [submitData]="submitData"></app-summarize>
+  </div>
+
+</div>

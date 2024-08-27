@@ -21,6 +21,9 @@ export class ProductService {
   public AddMultiProducts(product: product[]) {
     return this.http.post<product>(`${environment.apiUrl}Product/AddMultiProduct`, product)
   }
+  public ValidateAddMultiProducts(product: product[]) {
+    return this.http.post<product>(`${environment.apiUrl}Product/ValidateAddMultiProduct`, product)
+  }
   public UpdateProduct(sku: string, product: product) {
     return this.http.put<product>(`${environment.apiUrl}Product/UpdateProduct/${sku}`, product)
   }
@@ -33,10 +36,10 @@ export class ProductService {
   public CutQuantitySingleProduct(product: product, updateby: string) {
     return this.http.patch<product>(`${environment.apiUrl}Product/CutQuantitySingleProduct/${updateby}`, product)
   }
-  public AddQuantityMultiProduct(product: product, updateby: string) {
+  public AddQuantityMultiProduct(product: product[], updateby: string) {
     return this.http.patch<product>(`${environment.apiUrl}Product/AddQuantityMultiProduct/${updateby}`, product)
   }
-  public CutQuantityMultiProduct(product: product, updateby: string) {
+  public CutQuantityMultiProduct(product: product[], updateby: string) {
     return this.http.patch<product>(`${environment.apiUrl}Product/CutQuantityMultiProduct/${updateby}`, product)
   }
 }
