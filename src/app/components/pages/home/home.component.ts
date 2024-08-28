@@ -40,6 +40,7 @@ export class HomeComponent implements OnInit, OnDestroy {
         this.product.getAllProducts().subscribe(item => {
           this.productlist = this.productlist.concat(item)
           this.productlist = this.productlist.filter(item => item.status === '1')
+          this.productlist.sort((a, b) => parseInt(a.updateDate) - parseInt(b.updateDate))
           this.dtTrigger.next(null)
         })
       } catch (e) {
@@ -53,6 +54,14 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.status = 0
     } else {
       this.status = status
+    }
+    switch (status) {
+      case 1:
+        window.document.getElementById("uploadstock")?.classList.remove('show')
+        break;
+      case 2:
+        window.document.getElementById("addStock")?.classList.remove('show')
+        break;
     }
   }
 }

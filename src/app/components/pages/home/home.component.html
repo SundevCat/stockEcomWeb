@@ -9,9 +9,16 @@
             (click)="switchCoolapse(1)" aria-expanded="false" aria-controls="addStock">
             Scan Barcode
           </button>
+          <button class="btn btn-success me-2" type="button" data-bs-toggle="collapse" data-bs-target="#uploadstock"
+            (click)="switchCoolapse(2)" aria-expanded="false" aria-controls="uploadstock">
+            อัพโหลดไฟล์
+          </button>
         </div>
         <div class="collapse" id="addStock">
           <app-scanner [status]="status"></app-scanner>
+        </div>
+        <div class="collapse" id="uploadstock">
+          <app-stockfile></app-stockfile>
         </div>
         <div class="collapse" id="cutStock">
         </div>

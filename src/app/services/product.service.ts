@@ -36,10 +36,10 @@ export class ProductService {
   public CutQuantitySingleProduct(product: product, updateby: string) {
     return this.http.patch<product>(`${environment.apiUrl}Product/CutQuantitySingleProduct/${updateby}`, product)
   }
-  public AddQuantityMultiProduct(product: product[], updateby: string) {
+  public AddQuantityMultiProduct(product: any[], updateby: string) {
     return this.http.patch<product>(`${environment.apiUrl}Product/AddQuantityMultiProduct/${updateby}`, product)
   }
-  public CutQuantityMultiProduct(product: product[], updateby: string) {
+  public CutQuantityMultiProduct(product: any[], updateby: string) {
     return this.http.patch<product>(`${environment.apiUrl}Product/CutQuantityMultiProduct/${updateby}`, product)
   }
 }

@@ -1,0 +1,32 @@
+<div class="input-group my-2">
+  <select [(ngModel)]="statusAddStock" (change)="onSelectChange($event)" class="form-select text-success"
+    *ngIf="this.uploadstatus==true">
+    <option [value]="0" disabled selected> กรุณาเลือกประเภทการอัพโหลด</option>
+    <option [value]="1">เพิ่ม Stock</option>
+    <option [value]="2">ตัด Stock</option>
+  </select>
+  <button class="btn btn-outline-success ms-auto" *ngIf="this.uploadstatus==true" (click)="uploadFile()">
+    ยืนยันการอัพโหลด</button>
+</div>
+<div class="fs-5 ">
+  ตารางแสดงข้อมูลการอัพโหลด
+</div>
+<table class="table table-striped ">
+  <thead>
+    <tr>
+      <th scope="col">sku</th>
+      <th scope="col"> จำนวน</th>
+    </tr>
+  </thead>
+  <tbody *ngIf="this.uploadstatus" class="small">
+    <tr *ngFor="let item of jsonData">
+      <td>{{ item.sku }}</td>
+      <td>{{ item.quantity }}</td>
+    </tr>
+  </tbody>
+  <tbody *ngIf="this.uploadstatus == false">
+    <div class="spinner-border" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </tbody>
+</table>

@@ -6,6 +6,7 @@ import { user } from '../../../../models/user';
 import { ProductService } from '../../../../services/product.service';
 import { catchError, throwError } from 'rxjs';
 import { HttpErrorResponse } from '@angular/common/http';
+import { FunctionsService } from '../../../../services/functions.service';
 
 @Component({
   selector: 'app-addproduct',
@@ -18,7 +19,7 @@ export class AddproductComponent implements OnInit {
   submit: boolean = false
   skuChecked: boolean = false
   addproductStatus: boolean = false
-  constructor(private formbuilder: FormBuilder, private variableservice: VariableService, private userservice: UserService, private productservice: ProductService) {
+  constructor(private formbuilder: FormBuilder, private variableservice: VariableService, private userservice: UserService, private productservice: ProductService, private functionservice: FunctionsService) {
     this.product = formbuilder.group({
       sku: [null, Validators.required],
       productName: [null, Validators.required],
@@ -44,7 +45,9 @@ export class AddproductComponent implements OnInit {
     if (this.product.valid) {
       this.product.value.updateBy = this.user?.name
       this.product.value.quantity = parseInt(this.product.value.quantity)
-      this.product.value.updateDate = Date.now.toString()
+      this.product.value.updateDate = this.functionservice.formateDate(new Date())
+      console.log(this.product.value);
+
       this.productservice.AddProduct(this.product.value).pipe(catchError((error: HttpErrorResponse) => {
         if (error.status == 409) {
           this.skuChecked = true

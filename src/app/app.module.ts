@@ -21,6 +21,8 @@ import { AddfileproductComponent } from './components/pages/product/addfileprodu
 import { UploadcheckComponent } from './components/pages/product/addfileproduct/uploadcheck/uploadcheck.component';
 import { ScannerComponent } from './components/pages/home/scanner/scanner.component';
 import { SummarizeComponent } from './components/pages/home/scanner/summarize/summarize.component';
+import { StockfileComponent } from './components/pages/home/stockfile/stockfile.component';
+import { UploadstockcheckComponent } from './components/pages/home/stockfile/uploadstockcheck/uploadstockcheck.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -35,6 +37,8 @@ import { SummarizeComponent } from './components/pages/home/scanner/summarize/su
     UploadcheckComponent,
     ScannerComponent,
     SummarizeComponent,
+    StockfileComponent,
+    UploadstockcheckComponent,
   ],
   imports: [
     AppRoutingModule,

@@ -1,0 +1,40 @@
+<div class="card card-body py-5" [ngClass]="this.statusPageUpload ? '' : 'bg-secondary-subtle' ">
+    <div *ngIf="this.statusPageUpload">
+      <button class="btn btn-outline-primary d-flex my-2" (click)="backtoUpload()">
+        <mat-icon class="fs-6 h-100 my-auto">
+          arrow_back
+        </mat-icon>
+        กลับ
+      </button>
+      <app-uploadstockcheck [jsonData]="jsonData"></app-uploadstockcheck>
+    </div>
+    <div class="  text-center " *ngIf="this.statusPageUpload == false">
+      <mat-icon class="fs-1  w-100 h-100 ">
+        cloud_upload
+      </mat-icon>
+      <div class="small">
+        อัพโหลดไฟล์
+      </div>
+      <div class="small">
+        ไฟล์ที่รองรับ: .xlsx
+      </div>
+      <input type="file" id="inputfile" (change)="uploadFile($event)"
+        accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" hidden>
+      <label class="btn btn-success d-flex mx-auto my-2" style="width: max-content;" for="inputfile">
+        <mat-icon class="fs-5">
+          upload
+        </mat-icon>
+        <div>
+          อัพโหลดไฟล์
+        </div>
+      </label>
+    </div>
+  </div>
+  
+  <div type="button" class=" small p-2 d-flex align-items-center text-primary" (click)="downloadTemplate()">
+    <mat-icon class="fs-5 ">
+      download
+    </mat-icon>
+    ดาวโหลดไฟล์ตัวอย่าง
+  </div>
+  

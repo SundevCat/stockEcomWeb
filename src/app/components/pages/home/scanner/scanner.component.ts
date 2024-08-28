@@ -74,7 +74,7 @@ export class ScannerComponent implements OnInit, OnChanges, OnDestroy {
               icon: 'success',
               showConfirmButton: false,
               timer: 1000
-            })
+            }).then(() => { window.location.reload(); })
           });
 
         }
@@ -97,11 +97,11 @@ export class ScannerComponent implements OnInit, OnChanges, OnDestroy {
           this.submitted = true;
           this.submitData = await this.productservice.CutQuantityMultiProduct(this.scannedProducts, this.user.name).toPromise().then(() => {
             Swal.fire({
-              title: 'เพิ่มสำเร็จ',
+              title: 'ตัดสำเร็จ',
               icon: 'success',
               showConfirmButton: false,
               timer: 1000
-            })
+            }).then(() => { window.location.reload(); })
           });
         }
       })
