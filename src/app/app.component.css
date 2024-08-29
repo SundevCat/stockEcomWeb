@@ -1,16 +1,4 @@
-@font-face {
-  font-family: 'DB_AdmanRounded';
-  src: url('../assets/DB_AdmanRounded_X_v3.2.woff2');
-}
 
-@font-face {
-  font-family: 'VAG_Rounded';
-  src: url('../assets/Monotype_-_VAG_Rounded_Next_Regular.woff2');
-}
-
-* {
-  font-family: 'DB_AdmanRounded', 'VAG_Rounded' !important;
-}
 
 body,
 html {

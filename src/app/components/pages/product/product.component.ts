@@ -4,6 +4,7 @@ import { Subject, takeUntil } from 'rxjs';
 import { ProductService } from '../../../services/product.service';
 import Swal from 'sweetalert2';
 import excel from 'exceljs';
+import { saveAs } from 'file-saver';
 @Component({
   selector: 'app-product',
   templateUrl: './product.component.html',
@@ -25,7 +26,7 @@ export class ProductComponent implements OnInit, OnDestroy {
       this.dtoptions = {
         pagingType: 'full_numbers',
       }
-      this.loadProducts()
+      this.fetchProducts()
     }
   }
 
@@ -62,8 +63,10 @@ export class ProductComponent implements OnInit, OnDestroy {
 
 
 
-  loadProducts() {
+  fetchProducts() {
     this.productservice.getAllProducts().subscribe((item) => {
+      console.log(this.productlist);
+      
       this.productlist = this.productlist.concat(item)
       this.dtTrigger.next(null)
     })
@@ -81,9 +84,22 @@ export class ProductComponent implements OnInit, OnDestroy {
     }
   }
 
-  exportExcle() {
-    let workbook = new excel.Workbook();
-    const rows = workbook.addWorksheet('sheet') 
-    const columns = ["barcode", "sku", "productName", "quantity", "status"]
+  async exportExcle() {
+    const workbook = new excel.Workbook();
+    const worksheet = workbook.addWorksheet("stock")
+
+    worksheet.columns = [
+      { header: "barcode", key: "barcode" },
+      { header: "sku", key: "sku" },
+      { header: "productName", key: "productName" },
+      { header: "quantity", key: "quantity" }
+    ]
+    this.productlist.forEach(product => {
+      worksheet.addRow({ barcode: product.barcode, sku: product.sku, productName: product.productName, quantity: product.quantity })
+    });
+    const buffer = await workbook.xlsx.writeBuffer();
+    const blob = new Blob([buffer], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' })
+
+    saveAs(blob, 'Stock.xlsx')
   }
 }

@@ -25,25 +25,28 @@
         <table datatable class="hover row-hover" [dtOptions]="dtoptions" [dtTrigger]="dtTrigger">
           <thead>
             <tr>
+              <th class="text-center">อัพเดทล่าสุด </th>
               <th class="text-center">Barcode</th>
               <th class="text-center">Sku</th>
               <th class="text-center">ชื่อสินค้า</th>
               <th class="text-center">จำนวน</th>
-              <th class="text-center">อัพเดทล่าสุด </th>
               <th class="text-center">อัพเดทโดย</th>
             </tr>
           </thead>
           <tbody *ngIf="productlist != null">
             <tr *ngFor="let item of productlist">
+              <td>{{ item.updateDate }}</td>
               <td>{{ item.barcode }}</td>
               <td>{{ item.sku }}</td>
               <td>{{ item.productName }}</td>
               <td>{{ item.quantity }}</td>
-              <td>{{ item.updateDate }}</td>
               <td>{{ item.updateBy }}</td>
             </tr>
           </tbody>
         </table>
+
+      </div>
+      <div>
       </div>
     </div>
 

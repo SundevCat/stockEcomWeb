@@ -10,7 +10,10 @@ export class SummarizeComponent implements OnChanges {
   data: any[] = []
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['submitData']) {
+      console.log(this.submitData);
+
       this.data = this.submitData
+      console.log(this.data);
     }
   }
 

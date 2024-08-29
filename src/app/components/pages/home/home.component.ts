@@ -4,6 +4,7 @@ import { product } from '../../../models/product';
 import { Subject } from 'rxjs';
 import { Config } from 'datatables.net';
 
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
@@ -24,7 +25,8 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.loadProducts()
     this.dtoptions = {
-      pagingType: 'full_numbers'
+      pagingType: 'full_numbers',
+      order: [[0, 'desc']]
     }
 
   }
@@ -32,6 +34,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.unsubscribe.next(null);
     this.unsubscribe.complete();
+    this.dtTrigger.unsubscribe();
   }
 
   async loadProducts() {
@@ -64,4 +67,6 @@ export class HomeComponent implements OnInit, OnDestroy {
         break;
     }
   }
+
+
 }

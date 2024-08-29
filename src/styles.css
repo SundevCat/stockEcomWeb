@@ -1,4 +1,29 @@
 /* You can add global styles to this file, and also import other style files */
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+html,
+body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: "Helvetica Neue", 'DB_AdmanRounded', 'VAG_Rounded'  !important ;
+}
+
+@font-face {
+  font-family: 'DB_AdmanRounded';
+  src: url('./assets/DB_AdmanRounded_X_v3.2.woff2');
+}
+
+@font-face {
+  font-family: 'VAG_Rounded';
+  src: url('./assets/Monotype_-_VAG_Rounded_Next_Regular.woff2');
+}
+
+.swal2-title,
+.swal2-content,
+.swal2-confirm,
+.swal2-cancel,
+.swal2-html-container {
+  font-family: 'DB_AdmanRounded', 'VAG_Rounded' !important;
+}

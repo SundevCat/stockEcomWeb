@@ -2,7 +2,7 @@
   <button class="btn btn-outline-primary" (click)="reload()"> กลับ </button>
 </div>
 <div class="text-center py-2">
-    สรุปรายการอัพเดท
+  สรุปรายการอัพเดท
 </div>
 <div>
   <table class="w-25 m-auto text-center">
@@ -15,7 +15,9 @@
     <tbody *ngIf="this.data">
       <tr *ngFor="let item of data">
         <td>{{ item.sku }}</td>
-        <td>{{ item.quantity }}</td>
+        <td class="d-flex ">
+          <div class="small me-1" *ngIf="item.quantity==0"> ตัดไม่ได้ใน stock เหลือ </div>{{ item.quantity }}
+        </td>
       </tr>
     </tbody>
   </table>

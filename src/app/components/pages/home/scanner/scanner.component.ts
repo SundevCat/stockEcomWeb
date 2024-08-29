@@ -18,9 +18,9 @@ export class ScannerComponent implements OnInit, OnChanges, OnDestroy {
   scannedBarcode: string = ''
   scannedProducts: product[] = []
   submitted: boolean = false
-  submitData: any
+  submitData: any[] = []
   user: any
-
+  copyProducts: any[] = []
   private unsubscribe = new Subject<any>()
 
   constructor(private productservice: ProductService, private userservice: UserService, private variableservice: VariableService) { }
@@ -43,6 +43,7 @@ export class ScannerComponent implements OnInit, OnChanges, OnDestroy {
   ngOnDestroy(): void {
     this.unsubscribe.next(null)
     this.unsubscribe.complete();
+    this.unsubscribe.unsubscribe();
   }
 
   async fetchUsers() {
@@ -52,6 +53,7 @@ export class ScannerComponent implements OnInit, OnChanges, OnDestroy {
   async fetchProducts() {
     this.products = this.products.concat(await this.productservice.getAllProducts().toPromise())
     this.products = this.products.filter(item => item.status == 1)
+    this.copyProducts = this.products.slice().map(obj => ({ ...obj }))
     console.log(this.products);
 
   }
@@ -64,25 +66,34 @@ export class ScannerComponent implements OnInit, OnChanges, OnDestroy {
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Yes"
+        confirmButtonText: "Yes",
+        preConfirm: async () => {
+          Swal.update({
+            title: 'กำลังตัด Stock รอสักครู่',
+            showCancelButton: false,
+            confirmButtonText: 'Uploading...',
+            allowOutsideClick: false
+          });
+          this.submitted = true;
+          this.submitData = this.submitData.concat(await this.productservice.AddQuantityMultiProduct(this.scannedProducts, this.user.name).toPromise())
+        }
       }).then(async (result) => {
         if (result.isConfirmed) {
+          console.log(this.submitData);
           this.submitted = true;
-          this.submitData = await this.productservice.AddQuantityMultiProduct(this.scannedProducts, this.user.name).toPromise().then(() => {
-            Swal.fire({
-              title: 'เพิ่มสำเร็จ',
-              icon: 'success',
-              showConfirmButton: false,
-              timer: 1000
-            }).then(() => { window.location.reload(); })
-          });
-
+          Swal.fire({
+            title: 'เพิ่มสำเร็จ',
+            icon: 'success',
+            showConfirmButton: false,
+            timer: 1000
+          })
         }
       })
     }
   }
 
   async cutStock() {
+    var checkQuantity: boolean = true
     if (this.scannedProducts) {
       Swal.fire({
         title: "Are you sure?",
@@ -91,22 +102,54 @@ export class ScannerComponent implements OnInit, OnChanges, OnDestroy {
         showCancelButton: true,
         confirmButtonColor: "#3085d6",
         cancelButtonColor: "#d33",
-        confirmButtonText: "Yes"
+        confirmButtonText: "Yes",
+        preConfirm: async () => {
+          Swal.update({
+            title: 'กำลังตัด Stock รอสักครู่',
+            showCancelButton: false,
+            confirmButtonText: 'Uploading...',
+            allowOutsideClick: false
+          });
+          this.scannedProducts.forEach(async (scannedProduct) => {
+            const item = this.products.find(item => item.barcode == scannedProduct.barcode)
+            if (item.quantity - scannedProduct.quantity < 0) {
+              checkQuantity = false
+              this.submitData.push({
+                sku: item.sku,
+                quantity: item.quantity
+              })
+            }
+          });
+          console.log(checkQuantity);
+          if (checkQuantity) {
+            this.submitted = true;
+            this.submitData = this.submitData.concat(await this.productservice.CutQuantityMultiProduct(this.scannedProducts, this.user.name).toPromise())
+          }
+        }
       }).then(async (result) => {
         if (result.isConfirmed) {
-          this.submitted = true;
-          this.submitData = await this.productservice.CutQuantityMultiProduct(this.scannedProducts, this.user.name).toPromise().then(() => {
+          console.log(this.submitData);
+          if (checkQuantity) {
             Swal.fire({
               title: 'ตัดสำเร็จ',
               icon: 'success',
               showConfirmButton: false,
               timer: 1000
-            }).then(() => { window.location.reload(); })
-          });
+            })
+          } else {
+            this.submitted = true;
+            Swal.fire({
+              title: 'ตัดสินค้าเกินจำนวน',
+              icon: 'warning',
+              showConfirmButton: false,
+              timer: 3000
+            })
+          }
         }
       })
     }
   }
+
 
   onBarcodeScanned() {
     if (this.statusReady) {
@@ -135,9 +178,9 @@ export class ScannerComponent implements OnInit, OnChanges, OnDestroy {
         this.scannedProducts.splice(this.scannedProducts.findIndex((item) => item.sku == check.sku), 1)
         this.scannedProducts.push(check)
       } else {
-        var product: product = this.products.find(item => item.barcode == barcode)
-        product.quantity = 1
-        this.scannedProducts.push(product)
+        let item = this.copyProducts.find(item => item.barcode == barcode)
+        item.quantity = 1
+        this.scannedProducts.push(item)
       }
       console.log(this.scannedProducts);
     } else {
@@ -149,4 +192,6 @@ export class ScannerComponent implements OnInit, OnChanges, OnDestroy {
       })
     }
   }
+
+
 }
