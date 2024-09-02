@@ -2,13 +2,15 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { user } from '../models/user';
+import { catchError, throwError } from 'rxjs';
+import { VariableService } from './variable.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private variableService: VariableService) { }
 
   private handleError(error: HttpErrorResponse) {
     let errorMessage = 'An unknown error occurred!'
@@ -23,13 +25,23 @@ export class UserService {
     return this.http.get<user>(`${environment.apiUrl}User/GetAll`)
   }
   public getUserById(id: string) {
-    return this.http.get<user>(`${environment.apiUrl}User/GetUserById/${id}`)
+    return this.http.get<user>(`${environment.apiUrl}User/GetUserById/${id}`).pipe(catchError((error: HttpErrorResponse) => {
+      if (error.status == 404) {
+        this.variableService.login = true
+        localStorage.setItem('status', "0")
+      }
+      return throwError(() => error)
+    }))
   }
-  public UpdateUser(id: string, user: user) {
+  public UpdateUser(user: user, id: string) {
     return this.http.put<user>(`${environment.apiUrl}User/UpdateUser/${id}`, user)
   }
   public DeleteUser(id: string) {
     return this.http.delete<user>(`${environment.apiUrl}User/DeleteUser/${id}`)
+  }
+
+  public ChangePassword(user: user, id: string) {
+    return this.http.patch<user>(`${environment.apiUrl}User/ChangePassword/${id}`, user)
   }
 
   //Authorization//

@@ -15,9 +15,9 @@ export class NavbarComponent implements OnInit {
   constructor(private userservice: UserService, private variableservice: VariableService, private router: Router) {
 
   }
-  async ngOnInit() {
+  ngOnInit() {
     if (this.variableservice.user.id != '') {
-      await this.fetchUserById(this.variableservice.user.id);
+      this.fetchUserById(this.variableservice.user.id);
     }
   }
 
@@ -42,5 +42,8 @@ export class NavbarComponent implements OnInit {
   }
   toggleSettings() {
     this.settingStsuts = !this.settingStsuts
+  }
+  goToRegister() {
+    this.router.navigateByUrl('/register')
   }
 }

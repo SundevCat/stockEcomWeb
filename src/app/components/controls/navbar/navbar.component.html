@@ -15,14 +15,24 @@
           settings
         </mat-icon>
         <ul class="dropdown-menu border-0 shadow-sm " [ngClass]="settingStsuts?'show' :'hide' ">
-          <li> <a class="dropdown-item  text-secondary" href="#">ข้อมูลส่วนตัว</a></li>
-          <li> <a class="dropdown-item  text-secondary" href="#">เปลี่ยนรหัสผ่าน</a></li>
+          <li>
+            <div class="dropdown-item btn  text-secondary" data-bs-toggle="modal" data-bs-target="#accountSetting">
+              ข้อมูลส่วนตัว</div>
+          </li>
+          <li>
+            <div class="dropdown-item btn  text-secondary" (click)="goToRegister()">
+              จัดการบัญชี
+            </div>
+          </li>
           <li>
             <hr class="dropdown-divider">
           </li>
           <li (click)="logout()"> <a class="dropdown-item  text-secondary" href="#">ออกจากระบบ</a></li>
         </ul>
+
       </div>
+
     </div>
   </div>
+  <!-- Modal edit account -->
 </nav>

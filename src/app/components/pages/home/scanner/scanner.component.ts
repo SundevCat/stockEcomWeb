@@ -150,6 +150,18 @@ export class ScannerComponent implements OnInit, OnChanges, OnDestroy {
     }
   }
 
+  onSelectQuantity(sku: string, status: string) {
+    var item = this.scannedProducts.find(item => item.sku == sku)
+    if (item != undefined) {
+      if (status == 'up') {
+        item.quantity += 1
+      } else if (status == 'down') {
+        if (item.quantity > 0) {
+          item.quantity -= 1
+        }
+      }
+    }
+  }
 
   onBarcodeScanned() {
     if (this.statusReady) {
@@ -165,7 +177,6 @@ export class ScannerComponent implements OnInit, OnChanges, OnDestroy {
     if (this.scannedProducts) {
       this.scannedProducts.splice(this.scannedProducts.findIndex((item) => item.sku == sku), 1)
       console.log(this.scannedProducts);
-
     }
   }
 

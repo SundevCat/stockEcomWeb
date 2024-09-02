@@ -1,0 +1,52 @@
+<div class="modal fade" id="editModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="editModal" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form [formGroup]="formEditProduct" (ngSubmit)="onSubmit()">
+        <div class="modal-header ">
+          <div class="fs-5 text-center  w-100" id="editModal">แก้ไขข้อมูลสินค้า</div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col">
+              <label for="barcode" class="mt-1">Barcode</label>
+              <input type="text" formControlName="barcode" id="Barcode" class="form-control"
+                [ngClass]="{'is-invalid': this.formEditProduct.get('barcode')?.invalid && this.submitted }">
+
+            </div>
+          </div>
+          <div class="row mt-1">
+            <div class="col">
+              <label for="sku" class="mt-1">Sku</label>
+              <div class="form-control bg-secondary-subtle">{{ this.formEditProduct.value.sku }}  </div>
+            </div>
+            <div class="col">
+              <label for="productName" class="mt-1">ชื่อสินค้า</label>
+              <input type="text" formControlName="productName" id="ProductName" class="form-control"
+                [ngClass]="{'is-invalid': this.formEditProduct.get('productName')?.invalid && this.submitted }">
+            </div>
+          </div>
+          <div class="row mt-1">
+            <div class="col">
+              <label for="quantity" class="mt-1">จำนวน</label>
+              <input type="text" formControlName="quantity" id="Quantity" class="form-control"
+                [ngClass]="{'is-invalid': this.formEditProduct.get('quantity')?.invalid && this.submitted }">
+            </div>
+            <div class="col">
+              <label for="status" class="mt-1">สถานะ</label>
+              <select class="form-select" formControlName="status" name="" id="Status">
+                <option value="1">เปิดใช้งาน</option>
+                <option value="0">ปิดใช้งาน</option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">ปิด</button> -->
+          <button type="submit" class="btn btn-primary">บันทึก</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

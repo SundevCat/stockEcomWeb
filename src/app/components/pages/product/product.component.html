@@ -50,7 +50,8 @@
               <td>{{ item.updateDate }}</td>
               <td>{{ item.updateBy }}</td>
               <td class="d-flex mx-auto">
-                <button class="btn btn-outline-success btn-sm m-auto small">
+                <button class="btn btn-outline-success btn-sm m-auto small" data-bs-toggle="modal"
+                  (click)="onEditProductform(item.sku)" data-bs-target="#editModal">
                   แก้ไข
                 </button>
                 <button class="btn btn-outline-danger btn-sm m-auto small" (click)="deleteProduct(item.sku)">
@@ -72,3 +73,6 @@
   </div>
 
 </div>
+
+<!-- Modal Edit Product -->
+<app-editproduct [sku]="this.sku"></app-editproduct>

@@ -5,9 +5,11 @@
   </app-sidebar>
   <app-navbar class="navbar-top position-fixed"
     [ngClass]="this.variableService.sideBar ? 'containner-hide':' containner-show'">
+  
   </app-navbar>
 
   <div class="w-100 container " [ngClass]="this.variableService.sideBar ? 'containner-hide':' containner-show'">
     <router-outlet class="overflow-y-auto flex-grow-1"></router-outlet>
   </div>
 </div>
+<app-accountsetting></app-accountsetting>

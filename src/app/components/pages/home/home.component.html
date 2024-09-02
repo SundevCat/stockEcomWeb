@@ -4,7 +4,11 @@
     <div class="col-12">
       <div class="fs-2 py-2"> หน้าแรก </div>
       <div class="card p-4  fs-5">
+        <div>
+          จำนวนชิ้นคงเหลือ : {{ this.totalQuantity }} ชิ้น
+        </div>
         <div class="ms-auto py-2">
+
           <button class="btn btn-success me-2" type="button" data-bs-toggle="collapse" data-bs-target="#addStock"
             (click)="switchCoolapse(1)" aria-expanded="false" aria-controls="addStock">
             Scan Barcode

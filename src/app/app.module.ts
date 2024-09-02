@@ -23,6 +23,9 @@ import { ScannerComponent } from './components/pages/home/scanner/scanner.compon
 import { SummarizeComponent } from './components/pages/home/scanner/summarize/summarize.component';
 import { StockfileComponent } from './components/pages/home/stockfile/stockfile.component';
 import { UploadstockcheckComponent } from './components/pages/home/stockfile/uploadstockcheck/uploadstockcheck.component';
+import { EditproductComponent } from './components/pages/product/editproduct/editproduct.component';
+import { AccountsettingComponent } from './components/controls/navbar/accountsetting/accountsetting.component';
+import { AddaccountComponent } from './components/auth/register/addaccount/addaccount.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,6 +42,9 @@ import { UploadstockcheckComponent } from './components/pages/home/stockfile/upl
     SummarizeComponent,
     StockfileComponent,
     UploadstockcheckComponent,
+    EditproductComponent,
+    AccountsettingComponent,
+    AddaccountComponent,
   ],
   imports: [
     AppRoutingModule,

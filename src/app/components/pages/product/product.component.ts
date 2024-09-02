@@ -15,11 +15,10 @@ export class ProductComponent implements OnInit, OnDestroy {
   dtoptions: Config = {}
   dtTrigger: Subject<any> = new Subject<any>()
   tableResponsive: boolean = false
-
+  sku: any
   private unsubscribe = new Subject<any>();
 
   constructor(private productservice: ProductService) { }
-
 
   ngOnInit() {
     if (typeof window !== 'undefined') {
@@ -61,13 +60,14 @@ export class ProductComponent implements OnInit, OnDestroy {
     })
   }
 
-
+  onEditProductform(sku: string) {
+    this.sku = sku
+  }
 
   fetchProducts() {
     this.productservice.getAllProducts().subscribe((item) => {
-      console.log(this.productlist);
-      
       this.productlist = this.productlist.concat(item)
+      console.log(this.productlist);
       this.dtTrigger.next(null)
     })
   }

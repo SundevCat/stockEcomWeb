@@ -1,0 +1,68 @@
+<!-- Modal -->
+<div class="modal fade" id="accountSetting" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form [formGroup]="formAccountSetting" (ngSubmit)="onsubmit()">
+        <div class="modal-header">
+          <div class="fs-5 w-100 text-center" id="staticBackdropLabel">Account Setting</div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body w-75 px-5 m-auto">
+          <div class="row">
+            <label for="" class="fs-6"> email </label>
+            <div class="form-control bg-secondary-subtle">{{ this.formAccountSetting.value.email }}</div>
+          </div>
+          <div class="row mt-2">
+            <label for="" class="fs-6">ชื่อ </label>
+            <input type="text" formControlName="name" class="form-control">
+          </div>
+          <div class="row mt-2">
+            <label for="" class="fs-6">รหัสผ่าน </label>
+            <div type="button" class="btn btn-secondary" data-bs-toggle="modal" data-bs-target="#resetpassword"> Reset
+            </div>
+          </div>
+
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">บันทึก</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal reset password-->
+<div class="modal fade" id="resetpassword" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <form [formGroup]="formChangepassword" (ngSubmit)="onchangePassword()">
+        <div class="modal-header">
+          <div class="fs-5 w-100 text-center" id="staticBackdropLabel">Rest Password</div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body w-75 px-5 m-auto">
+          <div class="row">
+            <label for="" class="fs-6"> email </label>
+            <div class="form-control bg-secondary-subtle">{{ this.formAccountSetting.value.email }}</div>
+          </div>
+          <div class="row  mt-2">
+            <label for="" class="fs-6"> Password </label>
+            <input type="password" formControlName="password" class="form-control"
+              [ngClass]="{'is-invalid': this.formChangepassword.get('password')?.invalid && this.onsubmitPassword }">
+          </div>
+          <div class="row  mt-2">
+            <label for="" class="fs-6"> Confirm Password </label>
+            <input type="password" formControlName="confirmPassword" class="form-control"
+              [ngClass]="{'is-invalid': this.formChangepassword.get('confirmPassword')?.invalid && this.onsubmitPassword }">
+            <div *ngIf="this.matchPassword == false && this.onsubmitPassword" class="small text-danger"> * Please
+              confirm your password.</div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Save changes</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

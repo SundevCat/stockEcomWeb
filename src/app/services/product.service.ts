@@ -12,8 +12,11 @@ export class ProductService {
   public getAllProducts() {
     return this.http.get<product>(`${environment.apiUrl}Product/GetAllProducts`)
   }
+  public GetAllProductsActives() {
+    return this.http.get<product>(`${environment.apiUrl}Product/GetAllProductsActives`)
+  }
   public getProductBySku(sku: string) {
-    return this.http.get<product>(`${environment.apiUrl}Product/GetProductBySku${sku}`)
+    return this.http.get<product>(`${environment.apiUrl}Product/GetProductBySku/${sku}`)
   }
   public AddProduct(product: product) {
     return this.http.post<product>(`${environment.apiUrl}Product/AddProduct`, product)
@@ -24,7 +27,7 @@ export class ProductService {
   public ValidateAddMultiProducts(product: product[]) {
     return this.http.post<product>(`${environment.apiUrl}Product/ValidateAddMultiProduct`, product)
   }
-  public UpdateProduct(sku: string, product: product) {
+  public UpdateProduct( product: product,sku: string) {
     return this.http.put<product>(`${environment.apiUrl}Product/UpdateProduct/${sku}`, product)
   }
   public DeleteProduct(sku: string) {

@@ -17,6 +17,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   productlist: product[] = []
   dtoptions: Config = {}
   dtTrigger: Subject<any> = new Subject<any>()
+  totalQuantity: number = 0
   private unsubscribe = new Subject<any>();
 
   constructor(private product: ProductService) { }
@@ -40,12 +41,16 @@ export class HomeComponent implements OnInit, OnDestroy {
   async loadProducts() {
     if (typeof window !== 'undefined') {
       try {
-        this.product.getAllProducts().subscribe(item => {
+        this.product.GetAllProductsActives().subscribe(item => {
           this.productlist = this.productlist.concat(item)
-          this.productlist = this.productlist.filter(item => item.status === '1')
-          this.productlist.sort((a, b) => parseInt(a.updateDate) - parseInt(b.updateDate))
+          // this.productlist = this.productlist.filter(item => item.status === '1')
+          // this.productlist.sort((a, b) => parseInt(a.updateDate) - parseInt(b.updateDate))
+          this.productlist.forEach(element => {
+            this.totalQuantity += element.quantity
+          });
           this.dtTrigger.next(null)
         })
+
       } catch (e) {
         console.log(e);
       }
