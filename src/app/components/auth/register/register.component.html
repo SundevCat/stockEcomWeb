@@ -27,10 +27,6 @@
                 <td>{{ item.name }}</td>
                 <td>{{ item.email }}</td>
                 <td class="d-flex mx-auto ">
-                  <button class="btn btn-outline-success btn-sm m-auto small" data-bs-toggle="modal"
-                    (click)="onEditUser(item.id)" data-bs-target="#editModal">
-                    แก้ไข
-                  </button>
                   <button class="btn btn-outline-danger btn-sm m-auto small" (click)="deleteUser(item.id)">
                     ลบ
                   </button>

@@ -1,34 +1,42 @@
-<form>
+<form [formGroup]="formRegister" (ngSubmit)="onSubmit()">
   <div class="card card-body">
     <div class="row">
       <div class="col">
         <label for="barcode" class="form-label ">ชื่อ</label>
         <div class="input-group mb-3">
-          <input type="text" class="form-control" id="barcode">
+          <input type="text" formControlName="name" class="form-control" id="barcode"
+            [ngClass]="{'is-invalid': this.formRegister.get('name')?.invalid && this.submitted}">
         </div>
       </div>
       <div class="col">
         <label for="sku" class="form-label ">email</label>
         <div class="input-group mb-3">
-          <input type="text" class="form-control" id="sku">
-
+          <input type="email" formControlName="email" class="form-control" id="sku"
+            [ngClass]="{'is-invalid': this.formRegister.get('email')?.invalid && this.submitted}">
         </div>
       </div>
-
     </div>
     <div class="row">
       <div class="col">
         <label for="productname" class="form-label ">password</label>
         <div class="input-group mb-3">
-          <input type="text" class="form-control" id="productName">
+          <input type="password" formControlName="password" class="form-control" id="productName"
+            [ngClass]="{'is-invalid': this.formRegister.get('password')?.invalid && this.submitted}">
 
         </div>
       </div>
       <div class="col">
         <label for="quantity" class="form-label ">confirmpassword</label>
-        <div class="input-group mb-3">
-          <input type="text" class="form-control" id="quantity"> </div>
+        <div class="input-group mb-3  flex-column">
+          <input type="password" formControlName="confirmpassword" class="form-control w-100" id="quantity"
+            [ngClass]="{'is-invalid': this.formRegister.get('confirmpassword')?.invalid && this.submitted}">
+          <div class="text-danger small" *ngIf="this.confirmpassword==false && this.submitted">* Please confirm your
+            password. </div>
+        </div>
       </div>
+    </div>
+    <div class="d-flex">
+      <button type="submit" class="btn btn-primary ms-auto"> บันทึก</button>
     </div>
   </div>
 </form>

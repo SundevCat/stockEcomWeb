@@ -8,19 +8,28 @@
   <button class="btn btn-outline-success ms-auto" *ngIf="this.uploadstatus==true" (click)="uploadFile()">
     ยืนยันการอัพโหลด</button>
 </div>
-<div class="fs-5 ">
+<div class="fs-5 " *ngIf="this.statusAddStock ==1 || this.statusAddStock == 2 ">
   ตารางแสดงข้อมูลการอัพโหลด
+</div>
+<div *ngIf="this.statusAddStock == 3">
+  รายการที่ไม่สามารถอัพโหลดได้ กรุณาตรวจสอบอีกครั้ง
+</div>
+<div *ngIf="this.statusAddStock == 4">
+  รายการที่ไม่สามารถตัดได้ เนื่องจากเกินจำนวน
 </div>
 <table class="table table-striped ">
   <thead>
     <tr>
       <th scope="col">sku</th>
+      <th scope="col">ชื่อ</th>
       <th scope="col"> จำนวน</th>
     </tr>
   </thead>
-  <tbody *ngIf="this.uploadstatus" class="small">
+  <tbody *ngIf="this.uploadstatus" class="small"
+    [ngClass]="{'table-danger': this.statusAddStock==3 || this.statusAddStock == 4  }">
     <tr *ngFor="let item of jsonData">
       <td>{{ item.sku }}</td>
+      <td>{{ item.productName }}</td>
       <td>{{ item.quantity }}</td>
     </tr>
   </tbody>
