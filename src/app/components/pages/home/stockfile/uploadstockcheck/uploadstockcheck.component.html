@@ -1,3 +1,7 @@
+<div class="input-group w-25 ms-auto" style="margin-top: -37.6px;">
+  <span class="input-group-text">Note</span>
+  <input class="form-control" [(ngModel)]="note" id="note" type="text" placeholder="Note กันลืม ">
+</div>
 <div class="input-group my-2">
   <select [(ngModel)]="statusAddStock" (change)="onSelectChange($event)" class="form-select text-success"
     *ngIf="this.uploadstatus==true">

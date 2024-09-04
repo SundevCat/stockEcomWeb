@@ -27,22 +27,22 @@ export class ProductService {
   public ValidateAddMultiProducts(product: product[]) {
     return this.http.post<product>(`${environment.apiUrl}Product/ValidateAddMultiProduct`, product)
   }
-  public UpdateProduct( product: product,sku: string) {
+  public UpdateProduct(product: product, sku: string) {
     return this.http.put<product>(`${environment.apiUrl}Product/UpdateProduct/${sku}`, product)
   }
   public DeleteProduct(sku: string) {
     return this.http.delete<product>(`${environment.apiUrl}Product/DeleteProduct/${sku}`)
   }
-  public AddQuantitySingleProduct(product: product, updateby: string) {
-    return this.http.patch<product>(`${environment.apiUrl}Product/AddQuantitySingleProduct/${updateby}`, product)
+  public AddQuantitySingleProduct(product: product, updateby: string, note: string) {
+    return this.http.patch<product>(`${environment.apiUrl}Product/AddQuantitySingleProduct/${updateby}/${note}`, product)
   }
-  public CutQuantitySingleProduct(product: product, updateby: string) {
-    return this.http.patch<product>(`${environment.apiUrl}Product/CutQuantitySingleProduct/${updateby}`, product)
+  public CutQuantitySingleProduct(product: product, updateby: string, note: string) {
+    return this.http.patch<product>(`${environment.apiUrl}Product/CutQuantitySingleProduct/${updateby}/${note}`, product)
   }
-  public AddQuantityMultiProduct(product: any[], updateby: string) {
-    return this.http.patch<product>(`${environment.apiUrl}Product/AddQuantityMultiProduct/${updateby}`, product)
+  public AddQuantityMultiProduct(product: any[], updateby: string, note: string) {
+    return this.http.patch<product>(`${environment.apiUrl}Product/AddQuantityMultiProduct/${updateby}/${note}`, product)
   }
-  public CutQuantityMultiProduct(product: any[], updateby: string) {
-    return this.http.patch<product>(`${environment.apiUrl}Product/CutQuantityMultiProduct/${updateby}`, product)
+  public CutQuantityMultiProduct(product: any[], updateby: string, note: string) {
+    return this.http.patch<product>(`${environment.apiUrl}Product/CutQuantityMultiProduct/${updateby}/${note}`, product)
   }
 }

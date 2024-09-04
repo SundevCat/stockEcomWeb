@@ -13,6 +13,7 @@ import { VariableService } from '../../../../services/variable.service';
 })
 export class ScannerComponent implements OnInit, OnChanges, OnDestroy {
   @Input() status: any
+  note: string = ""
   products: any[] = []
   statusReady: boolean = false
   scannedBarcode: string = ''
@@ -54,8 +55,6 @@ export class ScannerComponent implements OnInit, OnChanges, OnDestroy {
     this.products = this.products.concat(await this.productservice.getAllProducts().toPromise())
     this.products = this.products.filter(item => item.status == 1)
     this.copyProducts = this.products.slice().map(obj => ({ ...obj }))
-    console.log(this.products);
-
   }
   async addStock() {
     if (this.scannedProducts) {
@@ -75,7 +74,10 @@ export class ScannerComponent implements OnInit, OnChanges, OnDestroy {
             allowOutsideClick: false
           });
           this.submitted = true;
-          this.submitData = this.submitData.concat(await this.productservice.AddQuantityMultiProduct(this.scannedProducts, this.user.name).toPromise())
+          if (this.note == "") {
+            this.note = "Blank"
+          }
+          this.submitData = this.submitData.concat(await this.productservice.AddQuantityMultiProduct(this.scannedProducts, this.user.name, this.note).toPromise())
         }
       }).then(async (result) => {
         if (result.isConfirmed) {
@@ -123,7 +125,10 @@ export class ScannerComponent implements OnInit, OnChanges, OnDestroy {
           console.log(checkQuantity);
           if (checkQuantity) {
             this.submitted = true;
-            this.submitData = this.submitData.concat(await this.productservice.CutQuantityMultiProduct(this.scannedProducts, this.user.name).toPromise())
+            if (this.note == "") {
+              this.note = "Blank"
+            }
+            this.submitData = this.submitData.concat(await this.productservice.CutQuantityMultiProduct(this.scannedProducts, this.user.name, this.note).toPromise())
           }
         }
       }).then(async (result) => {
@@ -166,9 +171,8 @@ export class ScannerComponent implements OnInit, OnChanges, OnDestroy {
   onBarcodeScanned() {
     if (this.statusReady) {
       // ใช้ == 13 เพราะใน barcode มี 13 หลัก
-      if (this.scannedBarcode.length == 13) {
+      if (this.scannedBarcode.length >= 13) {
         this.scannedProduct(this.scannedBarcode)
-        this.scannedBarcode = ''
       }
     }
   }
@@ -182,6 +186,7 @@ export class ScannerComponent implements OnInit, OnChanges, OnDestroy {
 
   scannedProduct(barcode: string) {
     const item = this.products.find(item => item.barcode == barcode)
+    this.scannedBarcode = ''
     if (item) {
       const check = this.scannedProducts.find((item) => item.barcode == barcode);
       if (check) {

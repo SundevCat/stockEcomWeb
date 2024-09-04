@@ -26,6 +26,7 @@ import { UploadstockcheckComponent } from './components/pages/home/stockfile/upl
 import { EditproductComponent } from './components/pages/product/editproduct/editproduct.component';
 import { AccountsettingComponent } from './components/controls/navbar/accountsetting/accountsetting.component';
 import { AddaccountComponent } from './components/auth/register/addaccount/addaccount.component';
+import { HistoryComponent } from './components/pages/history/history.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -45,6 +46,7 @@ import { AddaccountComponent } from './components/auth/register/addaccount/addac
     EditproductComponent,
     AccountsettingComponent,
     AddaccountComponent,
+    HistoryComponent,
   ],
   imports: [
     AppRoutingModule,

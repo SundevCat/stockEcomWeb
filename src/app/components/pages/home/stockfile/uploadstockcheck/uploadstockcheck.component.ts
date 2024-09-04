@@ -12,6 +12,7 @@ import Swal from 'sweetalert2';
 })
 export class UploadstockcheckComponent {
   @Input() jsonData: any[] = []
+  note: string = ""
   products: any[] = []
   productsUpload: any[] = []
   uploadstatus: boolean = false
@@ -52,7 +53,10 @@ export class UploadstockcheckComponent {
                 confirmButtonText: 'Uploading...',
                 allowOutsideClick: false
               });
-              await this.productservice.AddQuantityMultiProduct(this.jsonData, this.user.name).toPromise().then(() => { return true })
+              if (this.note == "") {
+                this.note = "Blank"
+              }
+              await this.productservice.AddQuantityMultiProduct(this.jsonData, this.user.name, this.note).pipe().toPromise().then(() => { return true })
             }
             if (this.statusAddStock == 2) {
               Swal.update({
@@ -63,7 +67,10 @@ export class UploadstockcheckComponent {
               });
 
               if (this.checkCutStock(this.products, this.jsonData).length == 0) {
-                await this.productservice.CutQuantityMultiProduct(this.jsonData, this.user.name).toPromise().then(() => { return true })
+                if (this.note == "") {
+                  this.note = "Blank"
+                }
+                await this.productservice.CutQuantityMultiProduct(this.jsonData, this.user.name, this.note).toPromise().then(() => { return true })
               } else {
                 this.jsonData = this.checkCutStock(this.products, this.jsonData)
                 this.statusAddStock = 4
@@ -133,8 +140,6 @@ export class UploadstockcheckComponent {
     newlistproduct.forEach(item1 => {
       const matchItem = listproduct.find(item2 => item1.sku === item2.sku)
       if (matchItem) {
-        console.log(item1.quantity);
-        console.log(matchItem.quantity);
         if (matchItem.quantity < item1.quantity) {
           isChecked.push(item1)
         }

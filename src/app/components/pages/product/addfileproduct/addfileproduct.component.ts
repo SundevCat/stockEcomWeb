@@ -90,7 +90,6 @@ export class AddfileproductComponent implements OnInit {
         })
       })  
       if (countCheckHeader === 5) {
-        console.log(JSON.stringify(this.jsonData, null, 2));
         this.statusPageUpload = true
       } else {
         Swal.fire({

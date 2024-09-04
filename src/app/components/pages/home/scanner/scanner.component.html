@@ -9,8 +9,18 @@
     </div>
     <div class="w-100">
       <div class="w-100 text-center text-success fs-4 py-2">Scan Barcode </div>
-      <label class="form-label small text-danger" for="scannedBarcode">*หมายเหตุ
-        กรุณาตรวจสอบภาษาของเครื่องให้เป็นภาษาอังกฤษ</label>
+      <div class="row py-2">
+        <div class="col">
+          <label class="form-label small text-danger" for="scannedBarcode">*หมายเหตุ
+            กรุณาตรวจสอบภาษาของเครื่องให้เป็นภาษาอังกฤษ</label>
+        </div>
+        <div class="col">
+          <div class="input-group w-50 ms-auto">
+            <span class="input-group-text">Note</span>
+            <input class="form-control" [(ngModel)]="note" id="note" type="text" placeholder="Note กันลืม ">
+          </div>
+        </div>
+      </div>
       <input class="form-control" type="text" id="scannedBarcode" [(ngModel)]="scannedBarcode"
         (ngModelChange)="onBarcodeScanned()" placeholder="Click here to scan" />
       <div class="my-2" *ngIf="this.scannedProducts">
@@ -32,13 +42,15 @@
               <label for="quantity" class="small"> จำนวน</label>
               <div id="quantity" class="d-flex justify-content-center">
 
-                <mat-icon class=" text-secondary small " style="cursor: pointer;" (click)="onSelectQuantity(item.sku,'down')">
+                <mat-icon class=" text-secondary small " style="cursor: pointer;"
+                  (click)="onSelectQuantity(item.sku,'down')">
                   remove
                 </mat-icon>
                 <span class="mx-2">
                   {{ item.quantity }}
                 </span>
-                <mat-icon class=" text-secondary small" style="cursor: pointer;" (click)="onSelectQuantity(item.sku,'up')">
+                <mat-icon class=" text-secondary small" style="cursor: pointer;"
+                  (click)="onSelectQuantity(item.sku,'up')">
                   add
                 </mat-icon>
               </div>
