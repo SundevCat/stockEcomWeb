@@ -1,5 +1,5 @@
 <app-login
-  *ngIf="this.variableService.login == true || (this.variableService.login == true && this.status ==undefined) || (this.variableService.login == true && this.status == '0')">
+  *ngIf="this.variableService.login == true">
 </app-login>
 <div class="d-flex position-relative w-100 bg-body-secondary min-vh-100"
   *ngIf="this.variableService.login == false || this.status == '1'">
