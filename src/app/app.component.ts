@@ -23,6 +23,7 @@ export class AppComponent implements OnInit {
   //status 0 = logout
   // this.variableService.login = true  logout
   ngOnInit(): void {
+    console.log(this.variableService.login);
     if (typeof window !== 'undefined') {
       this.responsiveLayout()
       this.status = localStorage.getItem('status')

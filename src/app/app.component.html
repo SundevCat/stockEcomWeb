@@ -1,11 +1,13 @@
-<app-login *ngIf="this.variableService.login == true || this.status ==undefined || this.status == '0'"></app-login>
+<app-login
+  *ngIf="this.variableService.login == true || (this.variableService.login == true && this.status ==undefined) || (this.variableService.login == true && this.status == '0')">
+</app-login>
 <div class="d-flex position-relative w-100 bg-body-secondary min-vh-100"
   *ngIf="this.variableService.login == false || this.status == '1'">
   <app-sidebar class="position-fixed side-bar" [ngClass]="this.variableService.sideBar ? 'showside':'hideside'">
   </app-sidebar>
   <app-navbar class="navbar-top position-fixed"
     [ngClass]="this.variableService.sideBar ? 'containner-hide':' containner-show'">
-  
+
   </app-navbar>
 
   <div class="w-100 container " [ngClass]="this.variableService.sideBar ? 'containner-hide':' containner-show'">
