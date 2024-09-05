@@ -67,7 +67,6 @@ export class ProductComponent implements OnInit, OnDestroy {
   fetchProducts() {
     this.productservice.getAllProducts().subscribe((item) => {
       this.productlist = this.productlist.concat(item)
-      console.log(this.productlist);
       this.dtTrigger.next(null)
     })
   }

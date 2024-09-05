@@ -1,10 +1,11 @@
 import { AfterViewInit, Component, HostListener, Input, OnChanges, OnDestroy, OnInit, SimpleChanges } from '@angular/core';
 import { ProductService } from '../../../../services/product.service';
-import { Subject } from 'rxjs';
+import { catchError, Subject, throwError } from 'rxjs';
 import Swal from 'sweetalert2';
 import { product } from '../../../../models/product';
 import { UserService } from '../../../../services/user.service';
 import { VariableService } from '../../../../services/variable.service';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-scanner',
@@ -77,7 +78,19 @@ export class ScannerComponent implements OnInit, OnChanges, OnDestroy {
           if (this.note == "") {
             this.note = "Blank"
           }
-          this.submitData = this.submitData.concat(await this.productservice.AddQuantityMultiProduct(this.scannedProducts, this.user.name, this.note).toPromise())
+          this.submitData = this.submitData.concat(await this.productservice.AddQuantityMultiProduct(this.scannedProducts, this.user.name, this.note).pipe(catchError((error: HttpErrorResponse) => {
+            if (error.status == 404) {
+              Swal.update({
+                title: 'Error',
+                text: 'Note ไม่ถูกต้อง กรุณา refresh หน้าใหม่',
+                icon: 'error',
+                showCancelButton: false,
+                confirmButtonText: 'คำแนะนำ Note ให้ใส่แค่ text',
+                allowOutsideClick: false
+              });
+            }
+            return throwError(() => error)
+          })).toPromise())
         }
       }).then(async (result) => {
         if (result.isConfirmed) {
@@ -128,7 +141,9 @@ export class ScannerComponent implements OnInit, OnChanges, OnDestroy {
             if (this.note == "") {
               this.note = "Blank"
             }
-            this.submitData = this.submitData.concat(await this.productservice.CutQuantityMultiProduct(this.scannedProducts, this.user.name, this.note).toPromise())
+            this.submitData = this.submitData.concat(await this.productservice.CutQuantityMultiProduct(this.scannedProducts, this.user.name, this.note).pipe(catchError((error: HttpErrorResponse) => {
+              return throwError(() => error)
+            })).toPromise())
           }
         }
       }).then(async (result) => {

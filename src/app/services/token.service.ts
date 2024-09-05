@@ -1,13 +1,11 @@
 import { HttpErrorResponse, HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { catchError, Observable, throwError } from 'rxjs';
+import { catchError, Observable, takeUntil, throwError } from 'rxjs';
 import { VariableService } from './variable.service';
 import { Router } from '@angular/router';
 import Swal from 'sweetalert2';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class TokenService implements HttpInterceptor {
   constructor(private router: Router, private variableService: VariableService) { }
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {

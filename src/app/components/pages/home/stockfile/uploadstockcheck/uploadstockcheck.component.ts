@@ -1,8 +1,10 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { ProductService } from '../../../../../services/product.service';
 import { VariableService } from '../../../../../services/variable.service';
 import { UserService } from '../../../../../services/user.service';
 import Swal from 'sweetalert2';
+import { catchError, Subject, takeUntil, throwError } from 'rxjs';
+import { HttpErrorResponse } from '@angular/common/http';
 
 
 @Component({
@@ -10,7 +12,7 @@ import Swal from 'sweetalert2';
   templateUrl: './uploadstockcheck.component.html',
   styleUrl: './uploadstockcheck.component.css'
 })
-export class UploadstockcheckComponent {
+export class UploadstockcheckComponent implements OnInit, OnDestroy {
   @Input() jsonData: any[] = []
   note: string = ""
   products: any[] = []
@@ -18,9 +20,15 @@ export class UploadstockcheckComponent {
   uploadstatus: boolean = false
   user: any
   statusAddStock: any = 0
+
   constructor(private productservice: ProductService, private variableservice: VariableService, private userservice: UserService) { }
   ngOnInit() {
-    this.checkProducts();
+    if (typeof window !== 'undefined') {
+      this.checkProducts();
+    }
+  }
+  ngOnDestroy(): void {
+
   }
 
   onSelectChange(event: Event): void {
@@ -28,6 +36,8 @@ export class UploadstockcheckComponent {
   }
   async checkProducts() {
     if (this.jsonData.length != 0) {
+      console.log(this.jsonData);
+
       this.user = await this.userservice.getUserById(this.variableservice.user.id).toPromise();
       this.uploadstatus = true
       this.products = this.products.concat(await this.productservice.GetAllProductsActives().toPromise())
@@ -46,17 +56,30 @@ export class UploadstockcheckComponent {
         confirmButtonText: "Yes",
         preConfirm: async () => {
           if (this.findProductDoseExits(this.products, this.jsonData).length == 0) {
+            if (this.note == "") {
+              this.note = "Blank"
+            }
             if (this.statusAddStock == 1) {
               Swal.update({
                 title: 'กำลังเพิ่ม Stock รอสักครู่',
+                text: 'ห้ามปิดหน้านี้จนกว่าจะสำเร็จ',
                 showCancelButton: false,
                 confirmButtonText: 'Uploading...',
                 allowOutsideClick: false
               });
-              if (this.note == "") {
-                this.note = "Blank"
-              }
-              await this.productservice.AddQuantityMultiProduct(this.jsonData, this.user.name, this.note).pipe().toPromise().then(() => { return true })
+              await this.productservice.AddQuantityMultiProduct(this.jsonData, this.user.name, this.note).pipe(catchError((error: HttpErrorResponse) => {
+                if (error.status == 404) {
+                  Swal.update({
+                    title: 'Error',
+                    text: 'Note ไม่ถูกต้อง กรุณา refresh หน้าใหม่',
+                    icon: 'error',
+                    showCancelButton: false,
+                    confirmButtonText: 'คำแนะนำ Note ให้ใส่แค่ text',
+                    allowOutsideClick: false
+                  });
+                }
+                return throwError(() => error)
+              })).toPromise().then(() => { return true })
             }
             if (this.statusAddStock == 2) {
               Swal.update({
@@ -67,10 +90,20 @@ export class UploadstockcheckComponent {
               });
 
               if (this.checkCutStock(this.products, this.jsonData).length == 0) {
-                if (this.note == "") {
-                  this.note = "Blank"
-                }
-                await this.productservice.CutQuantityMultiProduct(this.jsonData, this.user.name, this.note).toPromise().then(() => { return true })
+                await this.productservice.CutQuantityMultiProduct(this.jsonData, this.user.name, this.note).pipe(catchError((error: HttpErrorResponse) => {
+                  if (error.status == 404) {
+                    Swal.update({
+                      title: 'Error',
+                      text: 'Note ไม่ถูกต้อง กรุณา refresh หน้าใหม่',
+                      icon: 'error',
+                      showCancelButton: false,
+                      confirmButtonText: 'คำแนะนำ Note ให้ใส่แค่ text',
+                      allowOutsideClick: false
+                    });
+                  }
+                  return throwError(() => error)
+                })
+                ).toPromise().then(() => { return true })
               } else {
                 this.jsonData = this.checkCutStock(this.products, this.jsonData)
                 this.statusAddStock = 4
@@ -114,6 +147,14 @@ export class UploadstockcheckComponent {
               icon: 'error',
               showConfirmButton: false,
               timer: 1000
+            })
+          } else {
+            Swal.fire({
+              title: 'ไม่สามารถอัพโหลดได้',
+              text: 'กรุณาตรวจสอบ note แนะนำให้ใส่แค่ text',
+              icon: 'error',
+              showConfirmButton: true,
+              confirmButtonColor: "#3085d6",
             })
           }
         }
