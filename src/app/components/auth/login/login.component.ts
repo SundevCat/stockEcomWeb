@@ -23,8 +23,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
-
-
+    localStorage.setItem('status', '0');
   }
 
   handleSubmit() {
